@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Shop Me Admin Control Panel</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 minimum-scale=1.0">
+    <title>Home - Shop Me Admin</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
+
 <body>
-    <h1>Welcome to Shop me Admin Control Panel</h1>
+    <div class="container-fluid">
+        <div>
+            <nav class="navbar navbar-expand">
+                <img th:src="@{/images/shopme-admin-small.png}" alt="Logo">
+            </nav>
+        </div>
+        <div>
+            <h1>Welcome to Shop me Admin Control Panel</h1>
+        </div>
+
+        <footer>
+            <p>Shopme Control Panel - Copyright &copy; Shopme 2021</p>
+        </footer>
+        <!-- End of container-fluid -->
+    </div>
+
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
+
 </html>
