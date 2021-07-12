@@ -58,11 +58,16 @@
             </nav>
             <!-- End of navigation div -->
         </div>
-
+        <!-- Create new User -->
         <div>
             <h2>Manage Users</h2>
             <a th:href="@{/users/new}">Create New User</a>
         </div>
+        <!-- Show toast message of user creation -->
+        <div th:if="${message != null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+        <!-- List users -->
         <div>
             <table class="table table-bordered table-striped table-hover table-responsive-xl">
                 <thead class="thead-dark">
