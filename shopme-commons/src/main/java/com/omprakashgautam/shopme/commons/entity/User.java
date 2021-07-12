@@ -36,7 +36,7 @@ public class User {
     @Column(length = 64)
     private String photos;
 
-    private boolean enabled;
+    private boolean enabled = true;
 
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
