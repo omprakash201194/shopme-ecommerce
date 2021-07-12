@@ -1,10 +1,9 @@
 package com.omprakashgautam.shopme.commons.entity;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author omprakash gautam
@@ -13,7 +12,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "roles")
 @Data
-@ToString
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +26,30 @@ public class Role {
     public Role() {
     }
 
+    public Role(Long id) {
+        this.id = id;
+    }
+
     public Role(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return Objects.equals(id, role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }
