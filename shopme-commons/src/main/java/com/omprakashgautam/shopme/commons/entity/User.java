@@ -15,7 +15,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @Data
-@ToString
 @NoArgsConstructor
 public class User {
     @Id
@@ -53,5 +52,18 @@ public class User {
 
     public void addRole(Role role){
         this.getRoles().add(role);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", photos='" + photos + '\'' +
+                ", enabled=" + enabled +
+                ", roles=" + roles +
+                '}';
     }
 }
