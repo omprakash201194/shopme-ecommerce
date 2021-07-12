@@ -1,5 +1,6 @@
 package com.omprakashgautam.shopme.web.backend.controller;
 
+import com.omprakashgautam.shopme.commons.entity.Role;
 import com.omprakashgautam.shopme.commons.entity.User;
 import com.omprakashgautam.shopme.web.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,10 @@ public class UserController {
 
     @GetMapping("/users/new")
     public String newUser(Model model){
+        List<Role> roles = userService.listRole();
         User user = new User();
         model.addAttribute("user",user);
+        model.addAttribute("listRoles",roles);
         return "users_form";
     }
 

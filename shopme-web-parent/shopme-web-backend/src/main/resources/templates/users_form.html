@@ -66,6 +66,7 @@
         <div>
             <form th:action="@{/users/save}" method="POST" style="max-width:700px; margin:0 auto" th:object="${user}">
                 <div class="border border-secondary rounder p-3">
+                    <!-- Email -->
                     <div class="form-group row">
                         <label for="email" class="col-sm-4 col-form-label">Email</label>
                         <div class="col-sm-8">
@@ -73,6 +74,7 @@
                                 required minlength="8" maxlength="128">
                         </div>
                     </div>
+                    <!-- First Name -->
                     <div class="form-group row">
                         <label for="firstName" class="col-sm-4 col-form-label">First Name</label>
                         <div class="col-sm-8">
@@ -80,6 +82,7 @@
                                 maxlength="45">
                         </div>
                     </div>
+                    <!-- Last Name -->
                     <div class="form-group row">
                         <label for="lastName" class="col-sm-4 col-form-label">Last Name</label>
                         <div class="col-sm-8">
@@ -87,6 +90,7 @@
                                 minlength="2" maxlength="45">
                         </div>
                     </div>
+                    <!-- Password -->
                     <div class="form-group row">
                         <label for="password" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-8">
@@ -94,6 +98,21 @@
                                 minlength="8" maxlength="20">
                         </div>
                     </div>
+                    <!-- Select roles -->
+                    <div class="form-group row">
+                        <label for="roles" class="col-sm-4 col-form-label">Roles</label>
+                        <div class="col-sm-8">
+                            <th:block th:each="role : ${listRoles}">
+                                <div>
+                                    <input type="checkbox" th:field="*{roles}" th:text="${role.name}" th:value="${role.id}" class="m-2"> -
+                                    <small>[[${role.description}]]</small>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+
+
+                    <!-- Save and Cancel Button -->
                     <div class="text-center">
                         <input type="submit" value="Save" class="btn btn-primary">
                         <input type="button" value="Cancel" class="btn btn-secondary">
