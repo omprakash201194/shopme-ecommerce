@@ -44,6 +44,6 @@ public class UserService {
     }
 
     public boolean isEmailUnique(String email){
-        return userRepository.getUserByEmail(email).isPresent();
+        return userRepository.getUserByEmail(email).isEmpty();
     }
 }

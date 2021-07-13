@@ -64,7 +64,8 @@
         </div>
 
         <div>
-            <form th:action="@{/users/save}" method="POST" style="max-width:700px; margin:0 auto" th:object="${user}">
+            <form th:action="@{/users/save}" method="POST" style="max-width:700px; margin:0 auto" th:object="${user}"
+                onsubmit="return checkEmailUnique(this)">
                 <div class="border border-secondary rounder p-3">
                     <!-- Email -->
                     <div class="form-group row">
@@ -78,24 +79,24 @@
                     <div class="form-group row">
                         <label for="firstName" class="col-sm-4 col-form-label">First Name</label>
                         <div class="col-sm-8">
-                            <input type="text" name="firstName" id="firstName" class="form-control" th:field="*{firstName}" required minlength="2"
-                                maxlength="45">
+                            <input type="text" name="firstName" id="firstName" class="form-control"
+                                th:field="*{firstName}" required minlength="2" maxlength="45">
                         </div>
                     </div>
                     <!-- Last Name -->
                     <div class="form-group row">
                         <label for="lastName" class="col-sm-4 col-form-label">Last Name</label>
                         <div class="col-sm-8">
-                            <input type="text" name="lastName" id="lastName" class="form-control" th:field="*{lastName}" required
-                                minlength="2" maxlength="45">
+                            <input type="text" name="lastName" id="lastName" class="form-control" th:field="*{lastName}"
+                                required minlength="2" maxlength="45">
                         </div>
                     </div>
                     <!-- Password -->
                     <div class="form-group row">
                         <label for="password" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-8">
-                            <input type="password" name="password" id="password" class="form-control" th:field="*{password}" required
-                                minlength="8" maxlength="20">
+                            <input type="password" name="password" id="password" class="form-control"
+                                th:field="*{password}" required minlength="8" maxlength="20">
                         </div>
                     </div>
                     <!-- Select roles -->
@@ -104,7 +105,8 @@
                         <div class="col-sm-8">
                             <th:block th:each="role : ${listRoles}">
                                 <div>
-                                    <input type="checkbox" th:field="*{roles}" th:text="${role.name}" th:value="${role.id}" class="m-2"> -
+                                    <input type="checkbox" th:field="*{roles}" th:text="${role.name}"
+                                        th:value="${role.id}" class="m-2"> -
                                     <small>[[${role.description}]]</small>
                                 </div>
                             </th:block>
@@ -114,7 +116,7 @@
                     <div class="form-group row">
                         <label for="enabled" class="col-sm-4 col-form-label">Enabled</label>
                         <div class="col-sm-8">
-                            <input type="checkbox" th:field="*{enabled}" class="m-2">                                  
+                            <input type="checkbox" th:field="*{enabled}" class="m-2">
                         </div>
                     </div>
 
@@ -140,12 +142,29 @@
 
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $("#buttonCancel").on("click", function () {
                 window.location = "[[@{/users}]]"
             });
         });
+
+        function checkEmailUnique(form) {
+            url = "[[@{/users/check-email}]]";
+            userEmail = $("#email").val();
+            csrfValue = $("input[name='_csrf']").val();
+            params = { email: userEmail, _csrf: csrfValue };
+            $.post(url, params, function (response) {
+                if(response == "OK") {
+                    form.submit()
+                } else{
+                    alert("There is another user having the same email " + userEmail);
+                }
+            });
+            return false;
+        }
     </script>
 </body>
+
 </html>
