@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @DataJpaTest
@@ -82,5 +83,12 @@ class UserRepositoryTest {
     public void testDeleteUser(){
         Long userId = 2L;
         repo.deleteById(userId);
+    }
+
+    @Test
+    public void testUserByGetEmail(){
+        String email = "omprakash201194@gmail.com";
+        Optional<User> userByEmail = repo.getUserByEmail(email);
+        Assertions.assertThat(userByEmail.isPresent()).isTrue();
     }
 }
