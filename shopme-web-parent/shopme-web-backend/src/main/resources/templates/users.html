@@ -91,23 +91,31 @@
                 <tbody>
                     <tr th:each="user : ${listUsers}">
                         <td>[[${user.id}]]</td>
-                        <td><span class="fas fa-portrait fa-3x icon-silver"></span></td>
+                        <td>
+                            <span th:if="${user.photos == null}" class="fas fa-portrait fa-3x icon-silver"></span>
+                            <img class="img-circle" th:if="${user.photos != null}" th:src="@{${user.photosImagePath}}"
+                                height="100px" width="100px" style="border-radius: 50%;" alt="User Photo">
+                        </td>
                         <td>[[${user.email}]]</td>
                         <td>[[${user.firstName}]]</td>
                         <td>[[${user.lastName}]]</td>
                         <td>[[${user.roles}]]</td>
 
                         <td>
-                            <a th:if="${user.enabled}" title="Disable this user" th:href="@{'/users/' + ${user.id} + '/enabled/false'}" class="fas fa-check-circle fa-2x icon-green"></a>
-                            <a th:if="!${user.enabled}" title="Enable this user" th:href="@{'/users/' + ${user.id} + '/enabled/true'}"  class="fas fa-circle fa-2x icon-dark"></a>
+                            <a th:if="${user.enabled}" title="Disable this user"
+                                th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
+                                class="fas fa-check-circle fa-2x icon-green"></a>
+                            <a th:if="!${user.enabled}" title="Enable this user"
+                                th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
+                                class="fas fa-circle fa-2x icon-dark"></a>
 
                         </td>
                         <td>
                             <a th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"
                                 class="fas fa-edit fa-2x icon-green"></a>
                             &nbsp;
-                            <a th:userId="${user.id}" th:href="@{'/users/delete/' + ${user.id}}" title="Delete this user"
-                                class="fas fa-trash fa-2x icon-dark link-delete"></a>
+                            <a th:userId="${user.id}" th:href="@{'/users/delete/' + ${user.id}}"
+                                title="Delete this user" class="fas fa-trash fa-2x icon-dark link-delete"></a>
                         </td>
                     </tr>
                 </tbody>
@@ -147,9 +155,9 @@
             $(".link-delete").click(function (e) {
                 e.preventDefault();
                 link = $(this);
-                userId = link.attr("userId"); 
-                $("#yesButton").attr("href",link.attr("href"));
-                $("#confirmText").text("Are you sure you want to delete this user with id ["+ userId+"] ?");
+                userId = link.attr("userId");
+                $("#yesButton").attr("href", link.attr("href"));
+                $("#confirmText").text("Are you sure you want to delete this user with id [" + userId + "] ?");
                 $("#confirmModal").modal();
             });
         });

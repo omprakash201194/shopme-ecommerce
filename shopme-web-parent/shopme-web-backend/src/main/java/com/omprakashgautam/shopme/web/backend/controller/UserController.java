@@ -53,15 +53,15 @@ public class UserController {
     @PostMapping("/users/save")
     public String saveUser(User user, RedirectAttributes redirectAttributes,
                            @RequestParam("image")MultipartFile multipartFile) throws IOException {
-        System.out.println(user);
-        System.out.println(multipartFile.getOriginalFilename());
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        String uploadDir = "user-photos";
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        System.out.println(new File(".").getAbsolutePath());
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        //userService.save(user);
-       // redirectAttributes.addFlashAttribute("message","The user has been saved successfully.");
+        if(!multipartFile.isEmpty()) {
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            user.setPhotos(fileName);
+            User savedUser = userService.save(user);
+            String uploadDir = "user-photos/" + savedUser.getId();
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
+        //serService.save(user);
+        redirectAttributes.addFlashAttribute("message","The user has been saved successfully.");
         return "redirect:/users";
     }
 
@@ -71,6 +71,7 @@ public class UserController {
             User user = userService.getUser(id);
             model.addAttribute("user",user);
             fetchRoles(model);
+            System.out.println(user.getPhotosImagePath());
             model.addAttribute("pageTitle","Edit User ("+user.getFirstName()+")");
             return "users_form";
         } catch (UserNotFoundException e) {

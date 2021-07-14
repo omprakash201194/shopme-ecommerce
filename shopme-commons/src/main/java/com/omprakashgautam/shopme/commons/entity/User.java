@@ -66,4 +66,12 @@ public class User {
                 ", roles=" + roles +
                 '}';
     }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (id == null || photos == null) {
+            return "/user-photos/0/default-user.png";
+        }
+        return "/user-photos/" + this.id + "/" + this.photos;
+    }
 }
