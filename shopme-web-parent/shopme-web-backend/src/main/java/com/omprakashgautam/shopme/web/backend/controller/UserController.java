@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -45,9 +47,12 @@ public class UserController {
     }
 
     @PostMapping("/users/save")
-    public String saveUser(User user, RedirectAttributes redirectAttributes){
-        userService.save(user);
-        redirectAttributes.addFlashAttribute("message","The user has been saved successfully.");
+    public String saveUser(User user, RedirectAttributes redirectAttributes,
+                           @RequestParam("image")MultipartFile multipartFile){
+        System.out.println(user);
+        System.out.println(multipartFile.getOriginalFilename());
+        //userService.save(user);
+       // redirectAttributes.addFlashAttribute("message","The user has been saved successfully.");
         return "redirect:/users";
     }
 
