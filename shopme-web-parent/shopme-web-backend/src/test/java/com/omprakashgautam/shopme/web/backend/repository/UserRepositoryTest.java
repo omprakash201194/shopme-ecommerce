@@ -91,4 +91,12 @@ class UserRepositoryTest {
         Optional<User> userByEmail = repo.getUserByEmail(email);
         Assertions.assertThat(userByEmail.isPresent()).isTrue();
     }
+
+    @Test
+    public void testCountById(){
+        Long id = 1L;
+        Long count = repo.countById(id);
+
+        Assertions.assertThat(count).isNotNull().isGreaterThan(0L);
+    }
 }
