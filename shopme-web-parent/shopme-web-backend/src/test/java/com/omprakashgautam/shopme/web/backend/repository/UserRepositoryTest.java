@@ -99,4 +99,18 @@ class UserRepositoryTest {
 
         Assertions.assertThat(count).isNotNull().isGreaterThan(0L);
     }
+
+    @Test
+    public void testDisableUser(){
+        Long id = 1L;
+        repo.updateEnabledStatusByid(1L, false);
+    }
+
+    @Test
+    public void testEnableUser(){
+        Long id = 1L;
+        repo.updateEnabledStatusByid(1L, true);
+    }
+
+
 }

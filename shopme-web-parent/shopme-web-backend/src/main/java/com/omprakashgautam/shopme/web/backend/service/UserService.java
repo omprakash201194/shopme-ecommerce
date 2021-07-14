@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,7 @@ import java.util.Optional;
  * Created on 11-Jul-21 at 7:41 PM.
  */
 @Service
+@Transactional
 public class UserService {
     @Autowired
     private UserRepository userRepository;
@@ -80,5 +82,9 @@ public class UserService {
             throw new UserNotFoundException("Could not find any user with id " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    public void updateUserStatus(Long id, boolean status) {
+        userRepository.updateEnabledStatusByid(id,status);
     }
 }

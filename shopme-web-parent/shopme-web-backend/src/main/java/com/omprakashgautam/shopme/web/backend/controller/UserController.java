@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @GetMapping("/users/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes){
+    public String deleteUser(@PathVariable("id") Long id, RedirectAttributes redirectAttributes){
         try {
             userService.delete(id);
             redirectAttributes.addFlashAttribute("message","The user with id ["+id+"] has been deleted successfully");
@@ -75,6 +75,15 @@ public class UserController {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message",e.getMessage());
         }
+        return "redirect:/users";
+    }
+
+    @GetMapping("/users/{id}/enabled/{status}")
+    public String updateUserStatus(@PathVariable("id") Long id, @PathVariable("status") boolean status
+                                   , RedirectAttributes redirectAttributes){
+        userService.updateUserStatus(id, status);
+        String statusMessage = status ? "enabled" : "disabled";
+        redirectAttributes.addFlashAttribute("message","The user with id ["+id+"] has been "+ statusMessage +" successfully");
         return "redirect:/users";
     }
 }
