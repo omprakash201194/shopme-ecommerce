@@ -128,8 +128,9 @@
                     <div class="form-group row">
                         <label for="photos" class="col-sm-4 col-form-label">Photos</label>
                         <div class="col-sm-8">
-                            <input type="file" id="fileImage" accept="image/png, image/jpeg" class="m-2">
-                            <img id="thumbnail" th:src="@{/images/default-user.png}" alt="Photo preview">
+                            <input type="file" id="fileImage" accept="image/png, image/jpeg" class="mb-2">
+                            <img class="img-fluid" id="thumbnail" th:src="@{/images/default-user.png}"
+                                alt="Photo preview" width="100px" height="100px">
                         </div>
                     </div>
 
@@ -179,7 +180,21 @@
             $("#buttonCancel").on("click", function () {
                 window.location = "[[@{/users}]]"
             });
+
+            $("#fileImage").change(function () {
+                showImageThumbnail(this);
+            });
         });
+
+        // Code to show thumbnail of photo
+        function showImageThumbnail(fileInput) {
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#thumbnail").attr("src", e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
 
         function checkEmailUnique(form) {
             url = "[[@{/users/check-email}]]";
@@ -201,12 +216,13 @@
             return false;
         }
 
-
         function showModalDialog(title, message) {
             $("#modalTitle").text(title);
             $("#modalBody").text(message);
             $("#modalDialog").modal();
         }
+
+
 
     </script>
 </body>
