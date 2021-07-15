@@ -211,24 +211,24 @@
                 <ul class="pagination justify-content-center">
                     <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link"
-                            th:href="@{'/users/page/1?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">First</a>
+                            th:href="@{'/users/page/1?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">First</a>
                     </li>
                     <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link"
-                            th:href="@{'/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">Previous</a>
+                            th:href="@{'/users/page/' + ${currentPage - 1} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Previous</a>
                     </li>
                     <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
                         th:each="i : ${#numbers.sequence(1, totalPages)}">
                         <a class="page-link"
-                            th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                            th:href="@{'/users/page/' + ${i} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${i}]]</a>
                     </li>
                     <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link"
-                            th:href="@{'/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">Next</a>
+                            th:href="@{'/users/page/' + ${currentPage + 1} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Next</a>
                     </li>
                     <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link"
-                            th:href="@{'/users/page/' + ${totalPages} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}}">Last</a>
+                            th:href="@{'/users/page/' + ${totalPages} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">Last</a>
                     </li>
                 </ul>
             </nav>
