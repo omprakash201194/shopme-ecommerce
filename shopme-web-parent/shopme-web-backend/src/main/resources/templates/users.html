@@ -95,18 +95,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <!-- Id -->
-                        <th>
-                            <a th:if="${sortField != 'id'}" class="text-white"
-                                th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">User
-                                Id</a>
-
-                            <a th:if="${sortField == 'id'}" class="text-white"
-                                th:href="@{'/users/page/' + ${currentPage} + '?sortField=id&sortDir=' + ${reverseSortOrder}  + ${keyword != null ? '&keyword=' + keyword : ''}}">User
-                                Id</a>
-
-                            <span th:if="${sortField == 'id'}"
-                                th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                        </th>
+                        <th th:replace = "fragments :: column_link('id', 'User Id')" ></th>
                         <!-- Photos -->
                         <th>Photos</th>
                         <th>
