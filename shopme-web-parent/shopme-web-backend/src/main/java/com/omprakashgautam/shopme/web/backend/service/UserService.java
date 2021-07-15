@@ -6,6 +6,9 @@ import com.omprakashgautam.shopme.web.backend.exception.UserNotFoundException;
 import com.omprakashgautam.shopme.web.backend.repository.RoleRepository;
 import com.omprakashgautam.shopme.web.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
+    public static final int USER_PAGE_SIZE = 4;
     @Autowired
     private UserRepository userRepository;
 
@@ -31,6 +35,11 @@ public class UserService {
 
     public List<User> listAll(){
         return userRepository.findAll();
+    }
+
+    public Page<User> listByPage(int pageNum){
+        Pageable pageable = PageRequest.of(pageNum - 1, USER_PAGE_SIZE);
+        return userRepository.findAll(pageable);
     }
 
     public List<Role> listRole(){

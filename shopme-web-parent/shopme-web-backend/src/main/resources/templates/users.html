@@ -122,6 +122,38 @@
             </table>
         </div>
 
+        <div class="text-center m-1" th:if="${totalItems} > 0 and ${items} > 0">
+            <span>
+                Showing users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]
+            </span>
+        </div>
+        <div class="text-center m-1" th:if="${items} le 0">
+            <span>
+                No users found
+            </span>
+        </div>
+
+        <!-- Bootstrap Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/users/page/1}">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{'/users/page/' + ${currentPage - 1}}">Previous</a>
+                </li>
+                <li class="page-item" th:each ="i : ${#numbers.sequence(1, totalPages)}">
+                    <a class="page-link" th:href="@{'/users/page/' + ${i}}">[[${i}]]</a>
+                </li>                
+                <li class="page-item">
+                    <a class="page-link" th:href="@{'/users/page/' + ${currentPage + 1}}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{'/users/page/' + ${totalPages}}">Last</a>
+                </li>
+            </ul>
+        </nav>
+
         <div class="modal fade text-center" id="confirmModal">
             <div class="modal-dialog">
                 <div class="modal-content">

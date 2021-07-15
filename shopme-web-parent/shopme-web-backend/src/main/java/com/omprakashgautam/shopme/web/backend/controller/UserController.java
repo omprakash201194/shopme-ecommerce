@@ -6,6 +6,7 @@ import com.omprakashgautam.shopme.web.backend.exception.UserNotFoundException;
 import com.omprakashgautam.shopme.web.backend.service.UserService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,8 +30,28 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public String listAll(Model model){
-        List<User> users = userService.listAll();
+    public String listFirstPage(Model model){
+        return listByPage(1, model);
+    }
+
+    @GetMapping("/users/page/{pageNum}")
+    public String listByPage(@PathVariable(name = "pageNum") int pageNum, Model model){
+        Page<User> users = userService.listByPage(pageNum);
+        long startCount = (long) (pageNum - 1) * UserService.USER_PAGE_SIZE + 1;
+        long totalElements = users.getTotalElements();
+        if (startCount > totalElements) {
+            startCount = totalElements;
+        }
+        long endCount = startCount + UserService.USER_PAGE_SIZE - 1;
+        if (endCount > totalElements) {
+            endCount = totalElements;
+        }
+        model.addAttribute("totalItems", totalElements);
+        model.addAttribute("totalPages", users.getTotalPages());
+        model.addAttribute("items", users.get().count());
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("startCount", startCount);
+        model.addAttribute("endCount", endCount);
         model.addAttribute("listUsers", users);
         return "users";
     }
@@ -74,7 +94,6 @@ public class UserController {
             User user = userService.getUser(id);
             model.addAttribute("user",user);
             fetchRoles(model);
-            System.out.println(user.getPhotosImagePath());
             model.addAttribute("pageTitle","Edit User ("+user.getFirstName()+")");
             return "users_form";
         } catch (UserNotFoundException e) {
