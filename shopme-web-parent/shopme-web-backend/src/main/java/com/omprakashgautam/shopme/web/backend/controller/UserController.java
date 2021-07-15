@@ -3,6 +3,7 @@ package com.omprakashgautam.shopme.web.backend.controller;
 import com.omprakashgautam.shopme.commons.entity.Role;
 import com.omprakashgautam.shopme.commons.entity.User;
 import com.omprakashgautam.shopme.web.backend.exception.UserNotFoundException;
+import com.omprakashgautam.shopme.web.backend.reports.UserCSVExporter;
 import com.omprakashgautam.shopme.web.backend.service.UserService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -137,5 +139,12 @@ public class UserController {
         String statusMessage = status ? "enabled" : "disabled";
         redirectAttributes.addFlashAttribute("message","The user with id ["+id+"] has been "+ statusMessage +" successfully");
         return "redirect:/users";
+    }
+
+    @GetMapping("/users/export/csv")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        List<User> users = userService.listAll();
+        UserCSVExporter exporter = new UserCSVExporter();
+        exporter.export(users, response);
     }
 }
