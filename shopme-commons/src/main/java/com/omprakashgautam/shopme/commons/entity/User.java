@@ -2,7 +2,6 @@ package com.omprakashgautam.shopme.commons.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -73,5 +72,10 @@ public class User {
             return "/user-photos/0/default-user.png";
         }
         return "/user-photos/" + this.id + "/" + this.photos;
+    }
+
+    @Transient
+    public String getFullName(){
+        return firstName + " " + lastName;
     }
 }
