@@ -14,17 +14,24 @@
             <img th:src="@{/images/shopme-admin-big.png}" alt="Logo">
         </div>
 
-        <form action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
+        <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
+            <div th:if="${param.error}">
+                <p class="text-danger">
+                    [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]
+                </p>
+            </div>
+
             <div class="border border-secondary rounded p-3">
                 <p>Access to Shopme Control Panel</p>
                 <p>
                     <input type="email" name="email" id="email" placeholder="Email" class="form-control" required />
                 </p>
                 <p>
-                    <input type="password" name="password" id="password" placeholder="Password" class="form-control" required />
+                    <input type="password" name="password" id="password" placeholder="Password" class="form-control"
+                        required />
                 </p>
                 <p>
-                    <input type="submit" name="submit" id="submit" value="Login" class="btn btn-primary"/>
+                    <input type="submit" name="submit" id="submit" value="Login" class="btn btn-primary" />
                 </p>
             </div>
         </form>
@@ -34,6 +41,7 @@
         </footer>
         <!-- End of container-fluid -->
     </div>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 
