@@ -217,30 +217,9 @@
             </div>
 
             <!-- Footer -->
-            <div class="text-center">
-                <footer>
-                    <p>Shopme Control Panel - Copyright &copy; Shopme 2021</p>
-                </footer>
-            </div>
+            <div th:replace="fragments :: footer"></div>
             <!-- End of container-fluid -->
         </div>
-
-        <script>
-            $(document).ready(function () {
-                $(".link-delete").click(function (e) {
-                    e.preventDefault();
-                    link = $(this);
-                    userId = link.attr("userId");
-                    $("#yesButton").attr("href", link.attr("href"));
-                    $("#confirmText").text("Are you sure you want to delete this user with id [" + userId + "] ?");
-                    $("#confirmModal").modal();
-                });
-            });
-
-            function clearFilter() {
-                window.location = "[[@{/users}]]"
-            }
-        </script>
     </div>
 </body>
 

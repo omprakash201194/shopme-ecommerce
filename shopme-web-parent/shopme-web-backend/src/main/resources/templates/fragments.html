@@ -16,6 +16,15 @@
 </head>
 
 <body>
+
+    <!-- Footer -->
+    <div th:fragment="footer" class="text-center m-3">
+        <footer>
+            <p>Shopme Control Panel - Copyright &copy; Shopme 2021</p>
+        </footer>
+    </div>
+
+    <!-- Table headers sort-->
     <th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
         <a class="text-white"
             th:href="@{'/users/page/' + ${currentPage} + '?sortField='+${fieldName}+'&sortDir='
@@ -25,6 +34,7 @@
             th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
     </th>
 
+    <!-- Pagination Link -->
     <a th:fragment="page_link(pageNumber, pageLabel)" class="page-link"
         th:href="@{'/users/page/' + ${pageNumber} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${pageLabel}]]</a>
 </body>

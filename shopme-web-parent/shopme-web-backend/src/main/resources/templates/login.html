@@ -14,7 +14,7 @@
             <img th:src="@{/images/shopme-admin-big.png}" alt="Logo">
         </div>
 
-        
+
         <form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto;">
             <!-- Show validation error messages -->
             <div th:if="${param.error}">
@@ -45,9 +45,8 @@
             </div>
         </form>
 
-        <footer>
-            <p>Shopme Control Panel - Copyright &copy; Shopme 2021</p>
-        </footer>
+        <!-- Footer -->
+        <div th:replace="fragments :: footer"></div>
         <!-- End of container-fluid -->
     </div>
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
