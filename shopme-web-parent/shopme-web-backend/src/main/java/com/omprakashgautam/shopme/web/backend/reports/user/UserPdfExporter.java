@@ -1,4 +1,4 @@
-package com.omprakashgautam.shopme.web.backend.reports;
+package com.omprakashgautam.shopme.web.backend.reports.user;
 
 import com.lowagie.text.*;
 import com.lowagie.text.Font;
@@ -7,6 +7,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.omprakashgautam.shopme.commons.entity.User;
+import com.omprakashgautam.shopme.web.backend.reports.AbstractExporter;
 
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;

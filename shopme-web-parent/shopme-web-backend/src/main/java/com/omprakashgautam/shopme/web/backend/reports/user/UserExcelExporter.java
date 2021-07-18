@@ -1,6 +1,7 @@
-package com.omprakashgautam.shopme.web.backend.reports;
+package com.omprakashgautam.shopme.web.backend.reports.user;
 
 import com.omprakashgautam.shopme.commons.entity.User;
+import com.omprakashgautam.shopme.web.backend.reports.AbstractExporter;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.xssf.usermodel.*;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @author omprakash gautam
  * Created on 15-Jul-21 at 7:49 PM.
  */
-public class UserExcelExporter extends AbstractExporter{
+public class UserExcelExporter extends AbstractExporter {
 
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;

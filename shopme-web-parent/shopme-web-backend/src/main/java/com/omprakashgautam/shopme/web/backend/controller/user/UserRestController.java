@@ -1,4 +1,4 @@
-package com.omprakashgautam.shopme.web.backend.rest;
+package com.omprakashgautam.shopme.web.backend.controller.user;
 
 import com.omprakashgautam.shopme.web.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

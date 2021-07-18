@@ -1,6 +1,7 @@
-package com.omprakashgautam.shopme.web.backend.reports;
+package com.omprakashgautam.shopme.web.backend.reports.user;
 
 import com.omprakashgautam.shopme.commons.entity.User;
+import com.omprakashgautam.shopme.web.backend.reports.AbstractExporter;
 import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
@@ -13,7 +14,7 @@ import java.util.List;
  * @author omprakash gautam
  * Created on 15-Jul-21 at 7:18 PM.
  */
-public class UserCSVExporter extends AbstractExporter{
+public class UserCSVExporter extends AbstractExporter {
 
     public void export(List<User> listUsers, HttpServletResponse response) throws IOException {
         super.setResponseHeader(response,"text/csv",".csv");

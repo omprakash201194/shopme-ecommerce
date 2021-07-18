@@ -2,7 +2,7 @@ package com.omprakashgautam.shopme.web.backend.service;
 
 import com.omprakashgautam.shopme.commons.entity.Role;
 import com.omprakashgautam.shopme.commons.entity.User;
-import com.omprakashgautam.shopme.web.backend.exception.UserNotFoundException;
+import com.omprakashgautam.shopme.web.backend.exception.user.UserNotFoundException;
 import com.omprakashgautam.shopme.web.backend.repository.RoleRepository;
 import com.omprakashgautam.shopme.web.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

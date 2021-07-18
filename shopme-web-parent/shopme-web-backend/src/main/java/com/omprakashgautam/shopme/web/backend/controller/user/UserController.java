@@ -1,11 +1,11 @@
-package com.omprakashgautam.shopme.web.backend.controller;
+package com.omprakashgautam.shopme.web.backend.controller.user;
 
 import com.omprakashgautam.shopme.commons.entity.Role;
 import com.omprakashgautam.shopme.commons.entity.User;
-import com.omprakashgautam.shopme.web.backend.exception.UserNotFoundException;
-import com.omprakashgautam.shopme.web.backend.reports.UserCSVExporter;
-import com.omprakashgautam.shopme.web.backend.reports.UserExcelExporter;
-import com.omprakashgautam.shopme.web.backend.reports.UserPdfExporter;
+import com.omprakashgautam.shopme.web.backend.exception.user.UserNotFoundException;
+import com.omprakashgautam.shopme.web.backend.reports.user.UserCSVExporter;
+import com.omprakashgautam.shopme.web.backend.reports.user.UserExcelExporter;
+import com.omprakashgautam.shopme.web.backend.reports.user.UserPdfExporter;
 import com.omprakashgautam.shopme.web.backend.service.UserService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +25,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.omprakashgautam.shopme.web.backend.constants.UserConstants.*;
+
 /**
  * @author omprakash gautam
  * Created on 11-Jul-21 at 7:42 PM.
  */
 @Controller
 public class UserController {
+
     @Autowired
     private UserService userService;
 
@@ -67,7 +70,7 @@ public class UserController {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortOrder", reverseSortOrder);
         model.addAttribute("keyword", keyword);
-        return "users";
+        return VIEW_ALL_USERS;
     }
 
     @GetMapping("/users/new")
@@ -76,7 +79,7 @@ public class UserController {
         model.addAttribute("user",user);
         fetchRoles(model);
         model.addAttribute("pageTitle","Create New User");
-        return "users_form";
+        return VIEW_USERS_FORM;
     }
 
     private void fetchRoles(Model model) {
@@ -104,7 +107,7 @@ public class UserController {
 
     private String getUserUrl(User user) {
         String firstPartOfEmail = user.getEmail().split("@")[0];
-        return "redirect:/users/page/1?sortField=id&sortDir=asc&keyword=" + firstPartOfEmail;
+        return REDIRECT_TO_A_USER + firstPartOfEmail;
     }
 
     @GetMapping("/users/edit/{id}")
@@ -114,11 +117,11 @@ public class UserController {
             model.addAttribute("user",user);
             fetchRoles(model);
             model.addAttribute("pageTitle","Edit User ("+user.getFirstName()+")");
-            return "users_form";
+            return VIEW_USERS_FORM;
         } catch (UserNotFoundException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message",e.getMessage());
-            return "redirect:/users";
+            return REDIRECT_TO_USERS;
         }
     }
 
@@ -131,7 +134,7 @@ public class UserController {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message",e.getMessage());
         }
-        return "redirect:/users";
+        return REDIRECT_TO_USERS;
     }
 
     @GetMapping("/users/{id}/enabled/{status}")
@@ -140,7 +143,7 @@ public class UserController {
         userService.updateUserStatus(id, status);
         String statusMessage = status ? "enabled" : "disabled";
         redirectAttributes.addFlashAttribute("message","The user with id ["+id+"] has been "+ statusMessage +" successfully");
-        return "redirect:/users";
+        return REDIRECT_TO_USERS;
     }
 
     @GetMapping("/users/export/csv")

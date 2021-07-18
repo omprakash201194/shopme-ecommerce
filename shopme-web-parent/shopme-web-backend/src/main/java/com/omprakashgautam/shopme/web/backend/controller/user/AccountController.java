@@ -1,7 +1,7 @@
-package com.omprakashgautam.shopme.web.backend.controller;
+package com.omprakashgautam.shopme.web.backend.controller.user;
 
 import com.omprakashgautam.shopme.commons.entity.User;
-import com.omprakashgautam.shopme.web.backend.security.ShopmeUserDetails;
+import com.omprakashgautam.shopme.web.backend.security.user.ShopmeUserDetails;
 import com.omprakashgautam.shopme.web.backend.service.UserService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.Optional;
 
+import static com.omprakashgautam.shopme.web.backend.constants.UserConstants.*;
 /**
  * @author omprakash gautam
  * Created on 17-Jul-21 at 8:54 PM.
@@ -33,7 +34,7 @@ public class AccountController {
         String email = loggedUser.getUsername();
         Optional<User> user = service.getByEmail(email);
         model.addAttribute("user",user.get());
-        return "account_form";
+        return VIEW_ACCOUNT_FORM;
     }
 
     @PostMapping("/account/update")
@@ -56,7 +57,7 @@ public class AccountController {
         loggedInUser.setLastName(user.getLastName());
 
         redirectAttributes.addFlashAttribute("message","Your account details have been updated successfully.");
-        return "redirect:/account";
+        return REDIRECT_TO_ACCOUNT;
     }
 
 }

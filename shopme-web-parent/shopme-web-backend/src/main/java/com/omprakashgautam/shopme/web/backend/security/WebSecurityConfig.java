@@ -1,5 +1,6 @@
 package com.omprakashgautam.shopme.web.backend.security;
 
+import com.omprakashgautam.shopme.web.backend.security.user.ShopmeUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

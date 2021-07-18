@@ -1,4 +1,4 @@
-package com.omprakashgautam.shopme.web.backend.security;
+package com.omprakashgautam.shopme.web.backend.security.user;
 
 import com.omprakashgautam.shopme.commons.entity.Role;
 import com.omprakashgautam.shopme.commons.entity.User;

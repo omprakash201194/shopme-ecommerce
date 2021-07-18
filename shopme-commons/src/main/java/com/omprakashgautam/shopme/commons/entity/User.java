@@ -34,7 +34,7 @@ public class User {
     private String lastName;
 
     @Column(length = 64)
-    private String photos;
+    private String photos = "/user-photos/0/default-user.png";
 
     private boolean enabled = true;
 
