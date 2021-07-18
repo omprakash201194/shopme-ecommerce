@@ -17,6 +17,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.USER_PAGE_SIZE;
+
 /**
  * @author omprakash gautam
  * Created on 11-Jul-21 at 7:41 PM.
@@ -24,7 +26,6 @@ import java.util.Optional;
 @Service
 @Transactional
 public class UserService {
-    public static final int USER_PAGE_SIZE = 4;
     @Autowired
     private UserRepository userRepository;
 

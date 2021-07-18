@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.USER_PAGE_SIZE;
 import static com.omprakashgautam.shopme.web.backend.constants.UserConstants.*;
 
 /**
@@ -49,12 +50,12 @@ public class UserController {
                              @Param("keyword") String keyword,
                              Model model){
         Page<User> users = userService.listByPage(pageNum, sortField, sortDir, keyword);
-        long startCount = (long) (pageNum - 1) * UserService.USER_PAGE_SIZE + 1;
+        long startCount = (long) (pageNum - 1) * USER_PAGE_SIZE + 1;
         long totalElements = users.getTotalElements();
         if (startCount > totalElements) {
             startCount = totalElements;
         }
-        long endCount = startCount + UserService.USER_PAGE_SIZE - 1;
+        long endCount = startCount + USER_PAGE_SIZE - 1;
         if (endCount > totalElements) {
             endCount = totalElements;
         }

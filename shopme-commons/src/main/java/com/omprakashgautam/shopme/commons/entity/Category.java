@@ -27,7 +27,7 @@ public class Category {
     private String alias;
 
     @Column(length = 128, nullable = false)
-    private String image;
+    private String image = "/category-photos/0/default-user.png";
 
     private boolean enabled;
 
@@ -122,5 +122,13 @@ public class Category {
 
     public void setChildren(Set<Category> children) {
         this.children = children;
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (id == null || image == null) {
+            return "/category-photos/0/default-user.png";
+        }
+        return "/category-photos/" + this.id + "/" + this.image;
     }
 }
