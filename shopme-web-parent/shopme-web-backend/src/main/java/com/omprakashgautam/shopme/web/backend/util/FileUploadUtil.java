@@ -1,5 +1,6 @@
 package com.omprakashgautam.shopme.web.backend.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -14,6 +15,7 @@ import java.nio.file.StandardCopyOption;
  * @author omprakash gautam
  * Created on 14-Jul-21 at 8:49 PM.
  */
+@Slf4j
 public class FileUploadUtil {
     public static void saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
@@ -35,11 +37,11 @@ public class FileUploadUtil {
                 try {
                     Files.delete(file);
                 } catch (IOException e) {
-                    System.out.println("Could not delete file:" + file);
+                    log.error("Could not delete file:" + file);
                 }
             });
         } catch (IOException e) {
-            System.out.println("Could not list directory:" + dirPath);
+            log.error("Could not list directory:" + dirPath);
         }
     }
 }
