@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-import static com.omprakashgautam.shopme.web.backend.constants.CategoryConstants.VIEW_ALL_CATEGORIES;
+import static com.omprakashgautam.shopme.web.backend.constants.CategoryConstants.*;
 
 /**
  * @author omprakash gautam
@@ -26,5 +26,14 @@ public class CategoryController {
         List<Category> categories = service.listAll();
         model.addAttribute("listCategories", categories);
         return VIEW_ALL_CATEGORIES;
+    }
+
+    @GetMapping("/categories/new")
+    public String newCategory(Model model){
+        List<Category> listCategories = service.listCategoryForForm();
+        model.addAttribute("category", new Category());
+        model.addAttribute("pageTitle","Create New Category");
+        model.addAttribute("listCategories",listCategories);
+        return VIEW_CATEGORY_FORM;
     }
 }
