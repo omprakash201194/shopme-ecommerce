@@ -49,7 +49,8 @@ public class Category {
         this.image = image;
     }
 
-    public Category(String name) {
+    public Category(Long id, String name) {
+        this.id = id;
         this.name = name;
         this.alias = name;
         this.image = name;

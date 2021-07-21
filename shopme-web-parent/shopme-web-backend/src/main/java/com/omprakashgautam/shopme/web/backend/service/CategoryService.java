@@ -22,18 +22,21 @@ public class CategoryService {
         return repository.findAll();
     }
 
+    public Category save(Category category){
+        return repository.save(category);
+    }
+
     public List<Category> listCategoryForForm(){
         List<Category> all = repository.findAll();
         List<Category> categoriesForForm = new ArrayList<>();
         for (Category category : all){
             if (category.getParent() == null) {
-                categoriesForForm.add(new Category(category.getName()));
-                System.out.println(category.getName());
+                categoriesForForm.add(new Category(category.getId(), category.getName()));
 
                 Set<Category> children = category.getChildren();
                 for (Category subCategory : children) {
                     String subCategoryName = "--" + subCategory.getName();
-                    categoriesForForm.add(new Category(subCategoryName));
+                    categoriesForForm.add(new Category(subCategory.getId(), subCategoryName));
                     listChildren(categoriesForForm, subCategory, 1);
                 }
             }
@@ -43,11 +46,9 @@ public class CategoryService {
 
     private void listChildren(List<Category> categoriesForForm, Category category, int subLevel) {
         int newSubLevel = subLevel + 1;
-        StringBuilder name = new StringBuilder();
         for (Category subCategory : category.getChildren()) {
-            name.append("--".repeat(Math.max(0, newSubLevel)));
-            name.append(subCategory.getName());
-            categoriesForForm.add(new Category(name.toString()));
+            String name = "--".repeat(Math.max(0, newSubLevel)) + subCategory.getName();
+            categoriesForForm.add(new Category(subCategory.getId(), name));
             listChildren(categoriesForForm,subCategory, newSubLevel);
         }
     }
