@@ -64,6 +64,22 @@ public class Category {
     public Category() {
     }
 
+    public static Category copyFull(Category category){
+        Category copyCategory = new Category();
+        copyCategory.setId(category.getId());
+        copyCategory.setImage(category.getImage());
+        copyCategory.setEnabled(category.isEnabled());
+        copyCategory.setAlias(category.getAlias());
+        copyCategory.setName(category.getName());
+        return copyCategory;
+    }
+
+    public static Category copyFull(Category category, String name){
+        Category copyCategory = copyFull(category);
+        copyCategory.setName(name);
+        return copyCategory;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
@@ -134,8 +150,8 @@ public class Category {
     @Transient
     public String getPhotosImagePath() {
         if (id == null || image == null) {
-            return "/category-photos/0/default-user.png";
+            return "/category-images/0/default-user.png";
         }
-        return "/category-photos/" + this.id + "/" + this.image;
+        return "/category-images/" + this.id + "/" + this.image;
     }
 }

@@ -2,7 +2,10 @@ package com.omprakashgautam.shopme.web.backend.repository;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author omprakash gautam
@@ -10,5 +13,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
+
+    @Query("SELECT c FROM Category c WHERE c.parent.id IS NULL")
+    public List<Category> findRootCategories();
 
 }
