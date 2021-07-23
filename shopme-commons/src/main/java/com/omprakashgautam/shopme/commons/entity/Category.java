@@ -27,7 +27,7 @@ public class Category {
     private String alias;
 
     @Column(length = 128, nullable = false)
-    private String image = "/category-photos/0/default-user.png";
+    private String image;
 
     private boolean enabled;
 
@@ -149,8 +149,8 @@ public class Category {
 
     @Transient
     public String getPhotosImagePath() {
-        if (id == null || image == null) {
-            return "/category-images/0/default-user.png";
+        if (id == null || image == null || image.equalsIgnoreCase("default.png")) {
+            return "/category-images/0/default.png";
         }
         return "/category-images/" + this.id + "/" + this.image;
     }

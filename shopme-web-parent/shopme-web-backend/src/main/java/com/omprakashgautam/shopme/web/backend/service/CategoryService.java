@@ -1,6 +1,7 @@
 package com.omprakashgautam.shopme.web.backend.service;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
+import com.omprakashgautam.shopme.web.backend.exception.category.CategoryNotFoundException;
 import com.omprakashgautam.shopme.web.backend.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,5 +77,10 @@ public class CategoryService {
             categoriesForForm.add(new Category(subCategory.getId(), name));
             listChildren(categoriesForForm,subCategory, newSubLevel);
         }
+    }
+
+    public Category get(Long id) throws CategoryNotFoundException {
+        return repository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Could not find any category with id " + id));
     }
 }
