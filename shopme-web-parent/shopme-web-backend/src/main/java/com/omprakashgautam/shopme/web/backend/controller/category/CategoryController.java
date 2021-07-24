@@ -1,7 +1,6 @@
 package com.omprakashgautam.shopme.web.backend.controller.category;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
-import com.omprakashgautam.shopme.web.backend.constants.CommonConstants;
 import com.omprakashgautam.shopme.web.backend.exception.category.CategoryNotFoundException;
 import com.omprakashgautam.shopme.web.backend.service.CategoryService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
@@ -21,7 +20,8 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.omprakashgautam.shopme.web.backend.constants.CategoryConstants.*;
-import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.*;
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.ASC;
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.DESC;
 
 /**
  * @author omprakash gautam
