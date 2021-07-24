@@ -6,4 +6,6 @@ package com.omprakashgautam.shopme.web.backend.constants;
  */
 public interface CommonConstants {
     int USER_PAGE_SIZE = 4;
+    String DESC = "desc";
+    String ASC = "asc";
 }

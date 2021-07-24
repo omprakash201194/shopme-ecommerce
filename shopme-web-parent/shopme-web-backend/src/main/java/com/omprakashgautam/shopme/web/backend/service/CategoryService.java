@@ -1,8 +1,10 @@
 package com.omprakashgautam.shopme.web.backend.service;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
+import com.omprakashgautam.shopme.web.backend.constants.CommonConstants;
 import com.omprakashgautam.shopme.web.backend.exception.category.CategoryNotFoundException;
 import com.omprakashgautam.shopme.web.backend.repository.CategoryRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -18,32 +20,38 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repository;
 
-    public List<Category> listAll() {
-        List<Category> rootCategories = repository.findRootCategories(Sort.by("name").ascending());
-        return listHierarchicalCategories(rootCategories);
+    public List<Category> listAll(String sortDir) {
+        Sort sort = Sort.by("name");
+         if (sortDir.equals(CommonConstants.ASC)){
+            sort = sort.ascending();
+        } else if (sortDir.equals(CommonConstants.DESC)){
+            sort = sort.descending();
+        }
+        List<Category> rootCategories = repository.findRootCategories(sort);
+        return listHierarchicalCategories(rootCategories, sortDir);
     }
 
-    private List<Category> listHierarchicalCategories(List<Category> rootCategories) {
+    private List<Category> listHierarchicalCategories(List<Category> rootCategories, String sortDir) {
         List<Category> hierarchicalCategories = new ArrayList<>();
 
         for (Category category: rootCategories){
             hierarchicalCategories.add(Category.copyFull(category));
-            Set<Category> children = sortSubCategory(category.getChildren());
+            Set<Category> children = sortSubCategory(category.getChildren(), sortDir);
             for (Category subCategory : children) {
                 String subCategoryName = "--" + subCategory.getName();
                 hierarchicalCategories.add(Category.copyFull(subCategory, subCategoryName));
-                listSubHierarchical(hierarchicalCategories, subCategory, 1);
+                listSubHierarchical(hierarchicalCategories, subCategory, 1, sortDir);
             }
         }
         return hierarchicalCategories;
     }
 
-    private void listSubHierarchical(List<Category> hierarchicalCategories, Category category, int subLevel) {
+    private void listSubHierarchical(List<Category> hierarchicalCategories, Category category, int subLevel, String sortDir) {
         int newSubLevel = subLevel + 1;
         for (Category subCategory : sortSubCategory(category.getChildren())) {
             String name = "--".repeat(Math.max(0, newSubLevel)) + subCategory.getName();
             hierarchicalCategories.add(Category.copyFull(subCategory, name));
-            listSubHierarchical(hierarchicalCategories,subCategory, newSubLevel);
+            listSubHierarchical(hierarchicalCategories,subCategory, newSubLevel, sortDir);
         }
     }
 
@@ -109,7 +117,15 @@ public class CategoryService {
     }
 
     private SortedSet<Category> sortSubCategory(Set<Category> subCategories) {
-        TreeSet<Category> categories = new TreeSet<>(Comparator.comparing(Category::getName));
+        return sortSubCategory(subCategories, CommonConstants.ASC);
+    }
+
+    private SortedSet<Category> sortSubCategory(Set<Category> subCategories, String sortDir) {
+        Comparator<Category> comparator = Comparator.comparing(Category::getName);
+        if (sortDir.equals(CommonConstants.DESC)) {
+            comparator = comparator.reversed();
+        }
+        TreeSet<Category> categories = new TreeSet<>(comparator);
         categories.addAll(subCategories);
         return categories;
     }

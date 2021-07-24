@@ -50,8 +50,12 @@
                             <th>Category Photos</th>
 
                             <th class="hideable-column">
-                                <!-- Email  -->
-                            <th th:replace="fragments :: column_link('name', 'Category Name','tag')"></th>
+                                <!-- Category Name  -->
+                                <a class="text-white" th:href="@{'/categories?sortDir=' + ${reverseSortDir}}">Category
+                                    Name</a>
+                                <span
+                                    th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                                <!-- <th th:replace="fragments :: column_link('name', 'Category Name','tag')"></th> -->
                             </th>
                             <!-- First Name -->
                             <th th:replace="fragments :: column_link('alias', 'Alias','none')"></th>

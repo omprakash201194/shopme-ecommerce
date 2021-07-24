@@ -1,12 +1,12 @@
 package com.omprakashgautam.shopme.web.backend.controller.category;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
-import com.omprakashgautam.shopme.commons.entity.User;
+import com.omprakashgautam.shopme.web.backend.constants.CommonConstants;
 import com.omprakashgautam.shopme.web.backend.exception.category.CategoryNotFoundException;
-import com.omprakashgautam.shopme.web.backend.exception.user.UserNotFoundException;
 import com.omprakashgautam.shopme.web.backend.service.CategoryService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,8 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.omprakashgautam.shopme.web.backend.constants.CategoryConstants.*;
-import static com.omprakashgautam.shopme.web.backend.constants.UserConstants.REDIRECT_TO_USERS;
-import static com.omprakashgautam.shopme.web.backend.constants.UserConstants.VIEW_USERS_FORM;
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.*;
 
 /**
  * @author omprakash gautam
@@ -35,9 +34,14 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping("/categories")
-    public String listFirstPage(Model model){
-        List<Category> categories = service.listAll();
+    public String listFirstPage(@Param("sortDir") String sortDir, Model model){
+        if (sortDir == null || sortDir.isEmpty()) {
+            sortDir = ASC;
+        }
+        List<Category> categories = service.listAll(sortDir);
         model.addAttribute("listCategories", categories);
+        String reverseSortDir = sortDir.equalsIgnoreCase(ASC) ? DESC : ASC;
+        model.addAttribute("reverseSortDir", reverseSortDir);
         return VIEW_ALL_CATEGORIES;
     }
 
