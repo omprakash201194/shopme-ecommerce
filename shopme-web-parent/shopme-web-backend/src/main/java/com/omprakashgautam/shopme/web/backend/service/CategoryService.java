@@ -4,12 +4,10 @@ import com.omprakashgautam.shopme.commons.entity.Category;
 import com.omprakashgautam.shopme.web.backend.exception.category.CategoryNotFoundException;
 import com.omprakashgautam.shopme.web.backend.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author omprakash gautam
@@ -21,7 +19,7 @@ public class CategoryService {
     private CategoryRepository repository;
 
     public List<Category> listAll() {
-        List<Category> rootCategories = repository.findRootCategories();
+        List<Category> rootCategories = repository.findRootCategories(Sort.by("name").ascending());
         return listHierarchicalCategories(rootCategories);
     }
 
@@ -30,7 +28,7 @@ public class CategoryService {
 
         for (Category category: rootCategories){
             hierarchicalCategories.add(Category.copyFull(category));
-            Set<Category> children = category.getChildren();
+            Set<Category> children = sortSubCategory(category.getChildren());
             for (Category subCategory : children) {
                 String subCategoryName = "--" + subCategory.getName();
                 hierarchicalCategories.add(Category.copyFull(subCategory, subCategoryName));
@@ -42,7 +40,7 @@ public class CategoryService {
 
     private void listSubHierarchical(List<Category> hierarchicalCategories, Category category, int subLevel) {
         int newSubLevel = subLevel + 1;
-        for (Category subCategory : category.getChildren()) {
+        for (Category subCategory : sortSubCategory(category.getChildren())) {
             String name = "--".repeat(Math.max(0, newSubLevel)) + subCategory.getName();
             hierarchicalCategories.add(Category.copyFull(subCategory, name));
             listSubHierarchical(hierarchicalCategories,subCategory, newSubLevel);
@@ -54,13 +52,13 @@ public class CategoryService {
     }
 
     public List<Category> listCategoryForForm(){
-        List<Category> all = repository.findAll();
+        List<Category> all = repository.findAll(Sort.by("name").ascending());
         List<Category> categoriesForForm = new ArrayList<>();
         for (Category category : all){
             if (category.getParent() == null) {
                 categoriesForForm.add(new Category(category.getId(), category.getName()));
 
-                Set<Category> children = category.getChildren();
+                Set<Category> children = sortSubCategory(category.getChildren());
                 for (Category subCategory : children) {
                     String subCategoryName = "--" + subCategory.getName();
                     categoriesForForm.add(new Category(subCategory.getId(), subCategoryName));
@@ -73,7 +71,7 @@ public class CategoryService {
 
     private void listChildren(List<Category> categoriesForForm, Category category, int subLevel) {
         int newSubLevel = subLevel + 1;
-        for (Category subCategory : category.getChildren()) {
+        for (Category subCategory : sortSubCategory(category.getChildren())) {
             String name = "--".repeat(Math.max(0, newSubLevel)) + subCategory.getName();
             categoriesForForm.add(new Category(subCategory.getId(), name));
             listChildren(categoriesForForm,subCategory, newSubLevel);
@@ -108,5 +106,11 @@ public class CategoryService {
             }
         }
         return "OK";
+    }
+
+    private SortedSet<Category> sortSubCategory(Set<Category> subCategories) {
+        TreeSet<Category> categories = new TreeSet<>(Comparator.comparing(Category::getName));
+        categories.addAll(subCategories);
+        return categories;
     }
 }
