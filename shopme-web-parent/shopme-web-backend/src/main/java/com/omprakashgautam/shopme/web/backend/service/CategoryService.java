@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -82,5 +83,30 @@ public class CategoryService {
     public Category get(Long id) throws CategoryNotFoundException {
         return repository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Could not find any category with id " + id));
+    }
+
+    public String checkUnique(Long id, String name, String alias) {
+        boolean isNewCategory = (id == null || id == 0);
+        Optional<Category> byName = repository.findByName(name);
+        if (isNewCategory) {
+            if (byName.isPresent()) {
+                return "DuplicateName";
+            }
+            else {
+                Optional<Category> byAlias = repository.findByAlias(alias);
+                if (byAlias.isPresent()) {
+                    return "DuplicateAlias";
+                }
+            }
+        } else {
+            if (byName.isPresent() && !byName.get().getId().equals(id)) {
+                return "DuplicateName";
+            }
+            Optional<Category> byAlias = repository.findByAlias(alias);
+            if (byAlias.isPresent() && !byAlias.get().getId().equals(id)) {
+                return "DuplicateAlias";
+            }
+        }
+        return "OK";
     }
 }

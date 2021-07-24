@@ -15,7 +15,7 @@
 
         <div>
             <form th:action="@{/categories/save}" method="POST" style="max-width:500px; margin:0 auto"
-                th:object="${category}" enctype="multipart/form-data">
+                th:object="${category}" enctype="multipart/form-data" onsubmit="return checkUnique(this)">
                 <input type="hidden" th:field="*{id}">
                 <div class="border border-secondary rounder p-3">
                     <!-- Category Name -->
@@ -51,13 +51,13 @@
                         <label for="photos" class="col-sm-4 col-form-label">Image</label>
                         <div class="col-sm-8">
                             <input type="hidden" th:field="*{image}">
-                            <input type="file" id="fileImage" required name="fileImage" accept="image/png, image/jpeg" th:required="${category.photosImagePath == null}"
-                                class="mb-2">
+                            <input type="file" id="fileImage" required name="fileImage" accept="image/png, image/jpeg"
+                                th:required="${category.photosImagePath == null}" class="mb-2">
 
                             <div class="mt-2">
-                                <img class="img-fluid" id="thumbnail"
-                                    th:if="${category.image != null}"
-                                th:src="@{${category.photosImagePath}}" height="100px" width="100px" alt="Image preview">
+                                <img class="img-fluid" id="thumbnail" th:if="${category.image != null}"
+                                    th:src="@{${category.photosImagePath}}" height="100px" width="100px"
+                                    alt="Image preview">
                             </div>
                         </div>
                     </div>
@@ -77,6 +77,8 @@
             </form>
         </div>
 
+        <!-- Modal dialog -->
+        <div th:replace="modal_fragments :: modal_dialog"></div>
 
         <!-- Footer -->
         <div th:replace="fragments :: footer"></div>
@@ -85,6 +87,29 @@
 
     <script type="text/javascript">
         moduleUrl = "[[@{/categories}]]"
+
+        function checkUnique(form) {
+            url = "[[@{/categories/check-unique}]]";
+            catId = $("#id").val();
+            name = $("#name").val();
+            alias = $("#alias").val();
+            csrfValue = $("input[name='_csrf']").val();
+            params = { id: catId, name: name, alias: alias, _csrf: csrfValue };
+            $.post(url, params, function (response) {
+                if (response == "OK") {
+                    form.submit()
+                } else if (response == "DuplicateName") {
+                    showWarningModal("There is another category having the same name " + name);
+                } else if (response == "DuplicateAlias") {
+                    showWarningModal("There is another category having the same alias " + alias);
+                } else {
+                    showErrorModal("Unknown response from server");
+                }
+            }).fail(function () {
+                showErrorModal("Could not connect to the server");
+            });
+            return false;
+        }
 
     </script>
     <script type="text/javascript" th:src="@{/js/common_form.js}"></script>
