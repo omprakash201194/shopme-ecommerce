@@ -19,16 +19,11 @@ $(document).ready(function () {
 
 // Code to show thumbnail of photo
 function showImageThumbnail(fileInput) {
-  console.log("Showing thumbnail image..");
   var file = fileInput.files[0];
-  console.log(file);
   var reader = new FileReader();
   reader.onload = function (e) {
-    console.log($("#thumbnail").attr("src"));
-    console.log(e.target.result);
     $("#thumbnail").attr("src", e.target.result);
   };
-  console.log($("#thumbnail").attr("src"));
   reader.readAsDataURL(file);
 }
 

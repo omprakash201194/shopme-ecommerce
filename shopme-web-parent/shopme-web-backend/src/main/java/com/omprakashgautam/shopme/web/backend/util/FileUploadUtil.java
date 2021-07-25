@@ -3,7 +3,6 @@ package com.omprakashgautam.shopme.web.backend.util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -42,6 +41,15 @@ public class FileUploadUtil {
             });
         } catch (IOException e) {
             log.error("Could not list directory:" + dirPath);
+        }
+    }
+
+    public static void removeDir(String directory) {
+        cleanDirectory(directory);
+        try {
+            Files.delete(Paths.get(directory));
+        } catch (IOException e) {
+            log.error("Could not remove directory: " + directory);
         }
     }
 }

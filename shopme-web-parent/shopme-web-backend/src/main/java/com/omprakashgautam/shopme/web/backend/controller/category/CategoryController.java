@@ -97,4 +97,18 @@ public class CategoryController {
         redirectAttributes.addFlashAttribute("message", "The category with id [" + id + "] has been " + statusMessage + " successfully");
         return REDIRECT_TO_CATEGORIES;
     }
+
+    @GetMapping("/categories/delete/{id}")
+    public String deleteCategory(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            service.delete(id);
+            String categoryDir = "/categories-images/" + id;
+            FileUploadUtil.removeDir(categoryDir);
+            redirectAttributes.addFlashAttribute("message", "The category with id [" + id + "] has been deleted successfully");
+        } catch (CategoryNotFoundException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+        return REDIRECT_TO_CATEGORIES;
+    }
 }

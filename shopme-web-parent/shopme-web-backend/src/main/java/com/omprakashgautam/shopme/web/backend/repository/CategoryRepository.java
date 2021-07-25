@@ -17,6 +17,8 @@ import java.util.Optional;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
+    Long countById(Long id);
+
     @Query("SELECT c FROM Category c WHERE c.parent.id IS NULL")
     List<Category> findRootCategories(Sort sort);
 

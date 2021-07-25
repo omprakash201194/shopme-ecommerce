@@ -27,16 +27,38 @@
     <!-- Table headers sort-->
     <th th:fragment="column_link(fieldName, columnLabel, removeTag)" th:remove="${removeTag}">
         <a class="text-white"
-            th:href="@{'/users/page/' + ${currentPage} + '?sortField='+${fieldName}+'&sortDir='
+           th:href="@{'/users/page/' + ${currentPage} + '?sortField='+${fieldName}+'&sortDir='
              + ${sortField != fieldName ? sortDir : reverseSortOrder} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${columnLabel}]]</a>
 
         <span th:if="${sortField == fieldName}"
-            th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+              th:class="${sortDir == 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
     </th>
 
     <!-- Pagination Link -->
     <a th:fragment="page_link(pageNumber, pageLabel)" class="page-link"
-        th:href="@{'/users/page/' + ${pageNumber} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${pageLabel}]]</a>
+       th:href="@{'/users/page/' + ${pageNumber} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${pageLabel}]]</a>
+
+    <div th:fragment="category_status">
+        <a class="fas fa-check-circle fa-2x icon-green" th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"
+           th:if="${category.enabled}"
+           title="Disable this category"></a>
+
+        <a class="fas fa-circle fa-2x icon-dark" th:href="@{'/categories/' + ${category.id} + '/enabled/true'}"
+           th:if="!${category.enabled}" title="Enable this category"></a>
+    </div>
+
+    <div th:fragment="category_actions" th:remove="tag">
+        <!-- Edit -->
+        <a class="fas fa-edit fa-2x icon-green" th:href="@{'/categories/edit/' + ${category.id}}"
+           title="Edit this category"></a>
+        &nbsp;
+        <!-- Delete -->
+        <th:block th:if=${category.hasChildren==false}>
+            <a class="fas fa-trash fa-2x icon-dark link-delete" th:entityId="${category.id}"
+               th:href="@{'/categories/delete/' + ${category.id}}" title="Delete this category">
+            </a>
+        </th:block>
+    </div>
 </body>
 
 </html>

@@ -134,4 +134,12 @@ public class CategoryService {
     public void updateCategoryStatus(Long id, boolean status) {
         repository.updateEnabledStatusByid(id, status);
     }
+
+    public void delete(Long id) throws CategoryNotFoundException {
+        Long countById = repository.countById(id);
+        if (countById == null || countById == 0L) {
+            throw new CategoryNotFoundException("Could not find any category with Id [" + id + "]");
+        }
+        repository.deleteById(id);
+    }
 }

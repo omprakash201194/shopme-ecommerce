@@ -36,8 +36,11 @@ public class Category {
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
-    @Fetch(value= FetchMode.SELECT)
+    @Fetch(value = FetchMode.SELECT)
     private Set<Category> children = new HashSet<>();
+
+    @Transient
+    private boolean hasChildren = false;
 
     public Category(Long id) {
         this.id = id;
@@ -77,6 +80,7 @@ public class Category {
         copyCategory.setEnabled(category.isEnabled());
         copyCategory.setAlias(category.getAlias());
         copyCategory.setName(category.getName());
+        copyCategory.setHasChildren(category.getChildren().size() > 0);
         return copyCategory;
     }
 
@@ -159,5 +163,13 @@ public class Category {
             return "/category-images/0/default.png";
         }
         return "/category-images/" + this.id + "/" + this.image;
+    }
+
+    public boolean isHasChildren() {
+        return hasChildren;
+    }
+
+    public void setHasChildren(boolean hasChildren) {
+        this.hasChildren = hasChildren;
     }
 }

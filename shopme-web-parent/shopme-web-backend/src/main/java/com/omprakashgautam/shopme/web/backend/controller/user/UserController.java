@@ -107,8 +107,8 @@ public class UserController {
     }
 
     private String getUserUrl(User user) {
-        String firstPartOfEmail = user.getEmail().split("@")[0];
-        return REDIRECT_TO_A_USER + firstPartOfEmail;
+        String email = user.getEmail();
+        return REDIRECT_TO_A_USER + email;
     }
 
     @GetMapping("/users/edit/{id}")
