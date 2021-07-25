@@ -81,7 +81,7 @@
                             </td>
                             <td class="hideable-column">[[${category.name}]]</td>
                             <td>[[${category.alias}]]</td>
-
+                            <!-- Enabled -->
                             <td>
                                 <a th:if="${category.enabled}" title="Disable this category"
                                     th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"

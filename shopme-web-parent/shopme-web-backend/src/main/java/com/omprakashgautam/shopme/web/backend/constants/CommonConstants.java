@@ -8,4 +8,6 @@ public interface CommonConstants {
     int USER_PAGE_SIZE = 4;
     String DESC = "desc";
     String ASC = "asc";
+    String ENABLED = "enabled";
+    String DISABLED = "disabled";
 }

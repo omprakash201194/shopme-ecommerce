@@ -20,8 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.omprakashgautam.shopme.web.backend.constants.CategoryConstants.*;
-import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.ASC;
-import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.DESC;
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.*;
 
 /**
  * @author omprakash gautam
@@ -79,14 +78,23 @@ public class CategoryController {
             Category category = service.get(id);
             List<Category> listCategories = service.listCategoryForForm();
 
-            model.addAttribute("category",category);
-            model.addAttribute("listCategories",listCategories);
-            model.addAttribute("pageTitle","Edit Category ("+category.getName()+")");
+            model.addAttribute("category", category);
+            model.addAttribute("listCategories", listCategories);
+            model.addAttribute("pageTitle", "Edit Category (" + category.getName() + ")");
             return VIEW_CATEGORY_FORM;
         } catch (CategoryNotFoundException e) {
             e.printStackTrace();
-            redirectAttributes.addFlashAttribute("message",e.getMessage());
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
             return REDIRECT_TO_CATEGORIES;
         }
+    }
+
+    @GetMapping("/categories/{id}/enabled/{status}")
+    public String updateCategoryStatus(@PathVariable("id") Long id, @PathVariable("status") boolean status
+            , RedirectAttributes redirectAttributes) {
+        service.updateCategoryStatus(id, status);
+        String statusMessage = status ? ENABLED : DISABLED;
+        redirectAttributes.addFlashAttribute("message", "The category with id [" + id + "] has been " + statusMessage + " successfully");
+        return REDIRECT_TO_CATEGORIES;
     }
 }

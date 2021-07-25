@@ -4,11 +4,11 @@ import com.omprakashgautam.shopme.commons.entity.Category;
 import com.omprakashgautam.shopme.web.backend.constants.CommonConstants;
 import com.omprakashgautam.shopme.web.backend.exception.category.CategoryNotFoundException;
 import com.omprakashgautam.shopme.web.backend.repository.CategoryRepository;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 
 /**
@@ -16,6 +16,7 @@ import java.util.*;
  * Created on 18-Jul-21 at 9:09 PM.
  */
 @Service
+@Transactional
 public class CategoryService {
     @Autowired
     private CategoryRepository repository;
@@ -128,5 +129,9 @@ public class CategoryService {
         TreeSet<Category> categories = new TreeSet<>(comparator);
         categories.addAll(subCategories);
         return categories;
+    }
+
+    public void updateCategoryStatus(Long id, boolean status) {
+        repository.updateEnabledStatusByid(id, status);
     }
 }
