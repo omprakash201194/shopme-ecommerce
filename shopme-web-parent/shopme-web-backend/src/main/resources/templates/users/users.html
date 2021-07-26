@@ -130,8 +130,8 @@
                                 class="fas fa-check-circle fa-2x icon-green"></a>
 
                             <a th:if="!${user.enabled}" title="Enable this user"
-                               th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
-                               class="fas fa-circle fa-2x icon-dark"></a>
+                               class="fas fa-circle fa-2x icon-dark"
+                               th:href="@{'/users/' + ${user.id} + '/enabled/true'}"></a>
                             &nbsp;
 
                             <!-- Edit user -->
@@ -144,58 +144,15 @@
                                th:href="@{'/users/delete/' + ${user.id}}" title="Delete this user"></a>
                         </div>
                     </div>
-
-
                     <div>
                         &nbsp;
                     </div>
                 </div>
             </div>
             <!-- End of user listing -->
-            <div class="text-center m-1" th:if="${totalItems} > 0 and ${items} > 0">
-                <span>
-                    Showing users # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]
-                </span>
-            </div>
-            <div class="text-center m-1" th:if="${items} le 0">
-                <span>
-                    No users found
-                </span>
-            </div>
 
             <!-- Pagination -->
-            <div th:if="${totalPages > 1}">
-                <nav>
-                    <ul class="pagination justify-content-center flex-wrap">
-
-                        <!-- First Page -->
-                        <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                            <a th:replace="fragments :: page_link(1, 'First')"></a>
-                        </li>
-
-                        <!-- Previous -->
-                        <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                            <a th:replace="fragments :: page_link(${currentPage - 1}, 'Previous')"></a>
-                        </li>
-
-                        <!-- All pages -->
-                        <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
-                            th:each="i : ${#numbers.sequence(1, totalPages)}">
-                            <a th:replace="fragments :: page_link(${i}, ${i})"></a>
-                        </li>
-
-                        <!-- Next -->
-                        <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                            <a th:replace="fragments :: page_link(${currentPage + 1}, 'Next')"></a>
-                        </li>
-
-                        <!-- Last -->
-                        <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                            <a th:replace="fragments :: page_link(${totalPages}, 'Last')"></a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            <div th:replace="fragments :: pagination('/users','users')"/>
 
             <!-- Delete Confirmation Modal -->
             <div th:replace="modal_fragments :: confirm_modal"/>

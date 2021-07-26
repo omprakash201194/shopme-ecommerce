@@ -1,8 +1,7 @@
-package com.omprakashgautam.shopme.web.backend.reports.user;
+package com.omprakashgautam.shopme.web.backend.user;
 
-import com.lowagie.text.*;
 import com.lowagie.text.Font;
-import com.lowagie.text.pdf.PdfCell;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;

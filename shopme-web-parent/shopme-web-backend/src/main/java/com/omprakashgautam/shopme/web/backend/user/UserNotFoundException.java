@@ -1,4 +1,4 @@
-package com.omprakashgautam.shopme.web.backend.exception.user;
+package com.omprakashgautam.shopme.web.backend.user;
 
 /**
  * @author omprakash gautam

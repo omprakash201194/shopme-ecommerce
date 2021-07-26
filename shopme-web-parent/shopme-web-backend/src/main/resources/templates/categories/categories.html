@@ -51,10 +51,11 @@
 
                             <th class="hideable-column">
                                 <!-- Category Name  -->
-                                <a class="text-white" th:href="@{'/categories?sortDir=' + ${reverseSortDir}}">Category
+                                <a class="text-white"
+                                   th:href="@{'/categories/page/' + ${currentPage} +'?sortDir=' + ${reverseSortDir}}">Category
                                     Name</a>
                                 <span
-                                    th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
+                                        th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
                                 <!-- <th th:replace="fragments :: column_link('name', 'Category Name','tag')"></th> -->
                             </th>
                             <!-- First Name -->
@@ -99,9 +100,8 @@
                     <div class="col-4">
                         <!-- Category photo -->
                         <span th:if="${category.image == null}" class="fas fa-portrait fa-3x icon-silver"></span>
-                        <img alt="Category Photo" class="img-circle"
-                             height="100px" th:if="${category.image != null}" th:src="@{${category.photosImagePath}}"
-                             width="100px">
+                        <img alt="Category Photo" class="img-circle" height="100px" th:if="${category.image != null}"
+                             th:src="@{${category.photosImagePath}}" width="100px">
                     </div>
                     <!-- Category Details -->
                     <div class="col-8">
@@ -120,50 +120,9 @@
                 </div>
             </div>
             <!-- End of categories listing -->
-            <!-- <div class="text-center m-1" th:if="${totalItems} > 0 and ${items} > 0">
-                <span>
-                    Showing categories # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]
-                </span>
-            </div>
-            <div class="text-center m-1" th:if="${items} le 0">
-                <span>
-                    No categories found
-                </span>
-            </div>
 
-      
-            <div th:if="${totalPages > 1}">
-                <nav>
-                    <ul class="pagination justify-content-center flex-wrap">
-
-                     
-                        <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                            <a th:replace="fragments :: page_link(1, 'First')"></a>
-                        </li>
-
-                        
-                        <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                            <a th:replace="fragments :: page_link(${currentPage - 1}, 'Previous')"></a>
-                        </li>
-
-                      
-                        <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
-                            th:each="i : ${#numbers.sequence(1, totalPages)}">
-                            <a th:replace="fragments :: page_link(${i}, ${i})"></a>
-                        </li>
-
-                   
-                        <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                            <a th:replace="fragments :: page_link(${currentPage + 1}, 'Next')"></a>
-                        </li>
-
-                      
-                        <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                            <a th:replace="fragments :: page_link(${totalPages}, 'Last')"></a>
-                        </li>
-                    </ul>
-                </nav>
-            </div> -->
+            <!-- Pagination -->
+            <div th:replace="fragments :: pagination('/categories','top-level categories')"/>
 
             <!-- Delete Confirmation Modal -->
             <div th:replace="modal_fragments :: confirm_modal"/>

@@ -1,4 +1,4 @@
-package com.omprakashgautam.shopme.web.backend.repository;
+package com.omprakashgautam.shopme.web.backend.user;
 
 import com.omprakashgautam.shopme.commons.entity.User;
 import org.springframework.data.domain.Page;
@@ -16,14 +16,14 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    public Optional<User> getUserByEmail(String email);
+    Optional<User> getUserByEmail(String email);
 
-    public Long countById(Long id);
+    Long countById(Long id);
 
     @Query("SELECT u FROM User u WHERE CONCAT (u.id, ' ', u.email, ' ', u.firstName, ' ', u.lastName) LIKE %?1%")
-    public Page<User> findAll(String keyword, Pageable pageable);
+    Page<User> findAll(String keyword, Pageable pageable);
 
     @Query("UPDATE User u set u.enabled = ?2 where u.id=?1")
     @Modifying
-    public void updateEnabledStatusByid(Long id, boolean enabled);
+    void updateEnabledStatusByid(Long id, boolean enabled);
 }

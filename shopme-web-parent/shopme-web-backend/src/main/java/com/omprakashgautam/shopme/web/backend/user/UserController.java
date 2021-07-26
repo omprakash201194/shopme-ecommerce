@@ -1,12 +1,7 @@
-package com.omprakashgautam.shopme.web.backend.controller.user;
+package com.omprakashgautam.shopme.web.backend.user;
 
 import com.omprakashgautam.shopme.commons.entity.Role;
 import com.omprakashgautam.shopme.commons.entity.User;
-import com.omprakashgautam.shopme.web.backend.exception.user.UserNotFoundException;
-import com.omprakashgautam.shopme.web.backend.reports.user.UserCSVExporter;
-import com.omprakashgautam.shopme.web.backend.reports.user.UserExcelExporter;
-import com.omprakashgautam.shopme.web.backend.reports.user.UserPdfExporter;
-import com.omprakashgautam.shopme.web.backend.service.UserService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.USER_PAGE_SIZE;
-import static com.omprakashgautam.shopme.web.backend.constants.UserConstants.*;
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.PAGE_SIZE;
+import static com.omprakashgautam.shopme.web.backend.user.UserConstants.*;
 
 /**
  * @author omprakash gautam
@@ -50,12 +45,12 @@ public class UserController {
                              @Param("keyword") String keyword,
                              Model model){
         Page<User> users = userService.listByPage(pageNum, sortField, sortDir, keyword);
-        long startCount = (long) (pageNum - 1) * USER_PAGE_SIZE + 1;
+        long startCount = (long) (pageNum - 1) * PAGE_SIZE + 1;
         long totalElements = users.getTotalElements();
         if (startCount > totalElements) {
             startCount = totalElements;
         }
-        long endCount = startCount + USER_PAGE_SIZE - 1;
+        long endCount = startCount + PAGE_SIZE - 1;
         if (endCount > totalElements) {
             endCount = totalElements;
         }

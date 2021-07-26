@@ -1,6 +1,5 @@
-package com.omprakashgautam.shopme.web.backend.controller.user;
+package com.omprakashgautam.shopme.web.backend.user;
 
-import com.omprakashgautam.shopme.web.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PostMapping;

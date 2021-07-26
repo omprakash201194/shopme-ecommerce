@@ -1,6 +1,5 @@
-package com.omprakashgautam.shopme.web.backend.controller.category;
+package com.omprakashgautam.shopme.web.backend.category;
 
-import com.omprakashgautam.shopme.web.backend.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PostMapping;

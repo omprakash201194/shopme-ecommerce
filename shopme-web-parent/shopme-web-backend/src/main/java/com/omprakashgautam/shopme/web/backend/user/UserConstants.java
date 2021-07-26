@@ -1,4 +1,4 @@
-package com.omprakashgautam.shopme.web.backend.constants;
+package com.omprakashgautam.shopme.web.backend.user;
 
 /**
  * @author omprakash gautam

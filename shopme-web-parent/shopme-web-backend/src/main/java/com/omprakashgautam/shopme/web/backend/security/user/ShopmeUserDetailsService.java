@@ -1,7 +1,7 @@
 package com.omprakashgautam.shopme.web.backend.security.user;
 
 import com.omprakashgautam.shopme.commons.entity.User;
-import com.omprakashgautam.shopme.web.backend.repository.UserRepository;
+import com.omprakashgautam.shopme.web.backend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

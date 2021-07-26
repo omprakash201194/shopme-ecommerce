@@ -1,10 +1,7 @@
-package com.omprakashgautam.shopme.web.backend.service;
+package com.omprakashgautam.shopme.web.backend.user;
 
 import com.omprakashgautam.shopme.commons.entity.Role;
 import com.omprakashgautam.shopme.commons.entity.User;
-import com.omprakashgautam.shopme.web.backend.exception.user.UserNotFoundException;
-import com.omprakashgautam.shopme.web.backend.repository.RoleRepository;
-import com.omprakashgautam.shopme.web.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +14,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.USER_PAGE_SIZE;
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.PAGE_SIZE;
 
 /**
  * @author omprakash gautam
@@ -46,7 +43,7 @@ public class UserService {
     public Page<User> listByPage(int pageNum, String sortField, String sortDir, String keyword){
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
-        Pageable pageable = PageRequest.of(pageNum - 1, USER_PAGE_SIZE, sort);
+        Pageable pageable = PageRequest.of(pageNum - 1, PAGE_SIZE, sort);
         if (keyword != null && !keyword.isEmpty()){
             return userRepository.findAll(keyword, pageable);
         }

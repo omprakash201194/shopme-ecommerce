@@ -1,15 +1,18 @@
-package com.omprakashgautam.shopme.web.backend.service;
+package com.omprakashgautam.shopme.web.backend.category;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
 import com.omprakashgautam.shopme.web.backend.constants.CommonConstants;
-import com.omprakashgautam.shopme.web.backend.exception.category.CategoryNotFoundException;
-import com.omprakashgautam.shopme.web.backend.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+
+import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.PAGE_SIZE;
 
 /**
  * @author omprakash gautam
@@ -21,14 +24,21 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repository;
 
-    public List<Category> listAll(String sortDir) {
+    public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortDir) {
         Sort sort = Sort.by("name");
-         if (sortDir.equals(CommonConstants.ASC)){
+        if (sortDir.equals(CommonConstants.ASC)) {
             sort = sort.ascending();
-        } else if (sortDir.equals(CommonConstants.DESC)){
+        } else if (sortDir.equals(CommonConstants.DESC)) {
             sort = sort.descending();
         }
-        List<Category> rootCategories = repository.findRootCategories(sort);
+
+        Pageable pageable = PageRequest.of(pageNum - 1, PAGE_SIZE, sort);
+        Page<Category> pageCategories = repository.findRootCategories(pageable);
+        List<Category> rootCategories = pageCategories.getContent();
+
+        pageInfo.setTotalElements(pageCategories.getTotalElements());
+        pageInfo.setTotalPages(pageCategories.getTotalPages());
+
         return listHierarchicalCategories(rootCategories, sortDir);
     }
 

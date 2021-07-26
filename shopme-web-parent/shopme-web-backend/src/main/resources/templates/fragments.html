@@ -35,8 +35,8 @@
     </th>
 
     <!-- Pagination Link -->
-    <a th:fragment="page_link(pageNumber, pageLabel)" class="page-link"
-       th:href="@{'/users/page/' + ${pageNumber} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${pageLabel}]]</a>
+    <a class="page-link" th:fragment="page_link(moduleURL, pageNumber, pageLabel)"
+       th:href="@{${moduleURL}+'/page/' + ${pageNumber} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${pageLabel}]]</a>
 
     <div th:fragment="category_status">
         <a class="fas fa-check-circle fa-2x icon-green" th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"
@@ -58,6 +58,54 @@
                th:href="@{'/categories/delete/' + ${category.id}}" title="Delete this category">
             </a>
         </th:block>
+    </div>
+
+    <!-- Pagination -->
+    <div th:fragment="pagination(moduleURL, entityName)" th:remove="tag">
+        <div class="text-center m-1" th:if="${totalItems} > 0 and ${items} > 0">
+            <span>
+                Showing [[${entityName}]] # [[${startCount}]] to [[${endCount}]] of [[${totalItems}]]
+            </span>
+        </div>
+        <div class="text-center m-1" th:if="${items} le 0">
+            <span>
+                No [[${entityName}]] found
+            </span>
+        </div>
+
+        <!-- Pagination -->
+        <div th:if="${totalPages > 1}">
+            <nav>
+                <ul class="pagination justify-content-center flex-wrap">
+
+                    <!-- First Page -->
+                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="fragments :: page_link(${moduleURL}, 1, 'First')"></a>
+                    </li>
+
+                    <!-- Previous -->
+                    <li th:class="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="fragments :: page_link(${moduleURL}, ${currentPage - 1}, 'Previous')"></a>
+                    </li>
+
+                    <!-- All pages -->
+                    <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}"
+                        th:each="i : ${#numbers.sequence(1, totalPages)}">
+                        <a th:replace="fragments :: page_link(${moduleURL}, ${i}, ${i})"></a>
+                    </li>
+
+                    <!-- Next -->
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="fragments :: page_link(${moduleURL}, ${currentPage + 1}, 'Next')"></a>
+                    </li>
+
+                    <!-- Last -->
+                    <li th:class="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a th:replace="fragments :: page_link(${moduleURL}, ${totalPages}, 'Last')"></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </body>
 

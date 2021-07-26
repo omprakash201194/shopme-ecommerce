@@ -1,8 +1,7 @@
-package com.omprakashgautam.shopme.web.backend.controller.user;
+package com.omprakashgautam.shopme.web.backend.user;
 
 import com.omprakashgautam.shopme.commons.entity.User;
 import com.omprakashgautam.shopme.web.backend.security.user.ShopmeUserDetails;
-import com.omprakashgautam.shopme.web.backend.service.UserService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +17,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.Optional;
 
-import static com.omprakashgautam.shopme.web.backend.constants.UserConstants.*;
+import static com.omprakashgautam.shopme.web.backend.user.UserConstants.REDIRECT_TO_ACCOUNT;
+import static com.omprakashgautam.shopme.web.backend.user.UserConstants.VIEW_ACCOUNT_FORM;
 /**
  * @author omprakash gautam
  * Created on 17-Jul-21 at 8:54 PM.

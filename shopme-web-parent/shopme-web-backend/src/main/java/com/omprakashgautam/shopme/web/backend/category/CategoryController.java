@@ -1,8 +1,6 @@
-package com.omprakashgautam.shopme.web.backend.controller.category;
+package com.omprakashgautam.shopme.web.backend.category;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
-import com.omprakashgautam.shopme.web.backend.exception.category.CategoryNotFoundException;
-import com.omprakashgautam.shopme.web.backend.service.CategoryService;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.List;
 
-import static com.omprakashgautam.shopme.web.backend.constants.CategoryConstants.*;
+import static com.omprakashgautam.shopme.web.backend.category.CategoryConstants.*;
 import static com.omprakashgautam.shopme.web.backend.constants.CommonConstants.*;
 
 /**
@@ -33,14 +31,27 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping("/categories")
-    public String listFirstPage(@Param("sortDir") String sortDir, Model model){
+    public String listFirstPage(@Param("sortDir") String sortDir, Model model) {
+        return listByPage(1, sortDir, model);
+    }
+
+    @GetMapping("/categories/page/{pageNum}")
+    public String listByPage(@PathVariable("pageNum") int pageNum, @Param("sortDir") String sortDir, Model model) {
         if (sortDir == null || sortDir.isEmpty()) {
             sortDir = ASC;
         }
-        List<Category> categories = service.listAll(sortDir);
-        model.addAttribute("listCategories", categories);
+        CategoryPageInfo pageInfo = new CategoryPageInfo();
+        List<Category> categories = service.listByPage(pageInfo, pageNum, sortDir);
         String reverseSortDir = sortDir.equalsIgnoreCase(ASC) ? DESC : ASC;
+
+        model.addAttribute("listCategories", categories);
+        model.addAttribute("totalPages", pageInfo.getTotalPages());
+        model.addAttribute("totalItems", pageInfo.getTotalElements());
+        model.addAttribute("currentPage", pageNum);
+        model.addAttribute("sortField", "name");
+        model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
+        model.addAttribute("items", categories.size());
         return VIEW_ALL_CATEGORIES;
     }
 

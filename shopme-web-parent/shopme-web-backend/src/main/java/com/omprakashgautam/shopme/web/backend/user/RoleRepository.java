@@ -1,4 +1,4 @@
-package com.omprakashgautam.shopme.web.backend.repository;
+package com.omprakashgautam.shopme.web.backend.user;
 
 import com.omprakashgautam.shopme.commons.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;

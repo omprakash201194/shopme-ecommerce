@@ -2,6 +2,7 @@ package com.omprakashgautam.shopme.web.backend.repository;
 
 import com.omprakashgautam.shopme.commons.entity.Role;
 import com.omprakashgautam.shopme.commons.entity.User;
+import com.omprakashgautam.shopme.web.backend.user.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,8 @@
 package com.omprakashgautam.shopme.web.backend.service;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
-import com.omprakashgautam.shopme.web.backend.repository.CategoryRepository;
+import com.omprakashgautam.shopme.web.backend.category.CategoryRepository;
+import com.omprakashgautam.shopme.web.backend.category.CategoryService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

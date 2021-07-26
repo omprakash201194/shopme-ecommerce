@@ -1,4 +1,4 @@
-package com.omprakashgautam.shopme.web.backend.reports.user;
+package com.omprakashgautam.shopme.web.backend.user;
 
 import com.omprakashgautam.shopme.commons.entity.User;
 import com.omprakashgautam.shopme.web.backend.reports.AbstractExporter;
