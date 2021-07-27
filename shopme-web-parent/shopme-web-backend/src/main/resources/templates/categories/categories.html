@@ -37,7 +37,7 @@
                             <!-- Photos -->
                             <th>Category Photos</th>
 
-                            <th class="hideable-column">
+                            <th>
                                 <!-- Category Name  -->
                                 <a class="text-white"
                                    th:href="@{'/categories/page/' + ${currentPage} +'?sortDir=' + ${reverseSortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Category
@@ -47,7 +47,8 @@
                                 <!-- <th th:replace="fragments :: column_link('name', 'Category Name','tag')"></th> -->
                             </th>
                             <!-- First Name -->
-                            <th th:replace="fragments :: column_link('alias', 'Alias','none')"></th>
+                            <th class="hideable-column" th:replace="fragments :: column_link('alias', 'Alias','none')">
+                            </th>
 
                             <!-- Enabled -->
                             <th th:replace="fragments :: column_link('enabled', 'Enabled','none')"></th>
@@ -58,27 +59,27 @@
                     </thead>
                     <!-- Data values -->
                     <tbody>
-                        <tr th:each="category : ${listCategories}">
-                            <td class="hideable-column">[[${category.id}]]</td>
-                            <!-- Photo -->
-                            <td>
+                    <tr th:each="category : ${listCategories}">
+                        <td class="hideable-column">[[${category.id}]]</td>
+                        <!-- Photo -->
+                        <td>
                                 <span th:if="${category.image == null}"
-                                    class="fas fa-portrait fa-3x icon-silver"></span>
-                                <img class="img-circle" th:if="${category.image != null}"
-                                    th:src="@{${category.photosImagePath}}" height="100px" width="100px"
-                                    alt="Category Photo">
-                            </td>
-                            <td class="hideable-column">[[${category.name}]]</td>
-                            <td>[[${category.alias}]]</td>
-                            <!-- Enabled -->
-                            <td>
-                                <div th:replace="fragments :: category_status"/>
-                            </td>
-                            <!-- Actions -->
-                            <td>
-                                <div th:replace="fragments :: category_actions"/>
-                            </td>
-                        </tr>
+                                      class="fas fa-portrait fa-3x icon-silver"></span>
+                            <img class="img-circle" th:if="${category.image != null}"
+                                 th:src="@{${category.photosImagePath}}" height="100px" width="100px"
+                                 alt="Category Photo">
+                        </td>
+                        <td>[[${category.name}]]</td>
+                        <td class="hideable-column">[[${category.alias}]]</td>
+                        <!-- Enabled -->
+                        <td>
+                            <div th:replace="fragments :: category_status"/>
+                        </td>
+                        <!-- Actions -->
+                        <td>
+                            <div th:replace="fragments :: category_actions"/>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -95,10 +96,12 @@
                     <div class="col-8">
                         <!-- Name -->
                         <div>[[${category.name}]]</div>
-                        <!-- Alias -->
-                        <div class="mt-1">[[${category.alias}]]</div>
-                        <!-- Actions -->
-                        <div class="mt-2" th:replace="fragments :: category_actions"/>
+                        <!-- Status and Actions -->
+                        <div class="mt-2">
+                            <div th:replace="fragments :: category_status"/>
+                            &nbsp;
+                            <div th:replace="fragments :: category_actions"/>
+                        </div>
                     </div>
 
 

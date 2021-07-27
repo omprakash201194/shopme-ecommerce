@@ -38,10 +38,9 @@
     <a class="page-link" th:fragment="page_link(moduleURL, pageNumber, pageLabel)"
        th:href="@{${moduleURL}+'/page/' + ${pageNumber} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}  ${keyword != null ? '&keyword=' ++ keyword : ''}}">[[${pageLabel}]]</a>
 
-    <div th:fragment="category_status">
+    <div th:fragment="category_status" th:remove="tag">
         <a class="fas fa-check-circle fa-2x icon-green" th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"
-           th:if="${category.enabled}"
-           title="Disable this category"></a>
+           th:if="${category.enabled}" title="Disable this category"></a>
 
         <a class="fas fa-circle fa-2x icon-dark" th:href="@{'/categories/' + ${category.id} + '/enabled/true'}"
            th:if="!${category.enabled}" title="Enable this category"></a>
