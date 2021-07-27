@@ -36,7 +36,7 @@
 
     <!-- Pagination Link -->
     <a class="page-link" th:fragment="page_link(moduleURL, pageNumber, pageLabel)"
-       th:href="@{${moduleURL}+'/page/' + ${pageNumber} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir} + ${keyword != null ? '&keyword=' + keyword : ''}}">[[${pageLabel}]]</a>
+       th:href="@{${moduleURL}+'/page/' + ${pageNumber} + '?sortField=' + ${sortField}+'&sortDir=' + ${sortDir}  ${keyword != null ? '&keyword=' ++ keyword : ''}}">[[${pageLabel}]]</a>
 
     <div th:fragment="category_status">
         <a class="fas fa-check-circle fa-2x icon-green" th:href="@{'/categories/' + ${category.id} + '/enabled/false'}"
@@ -106,6 +106,21 @@
                 </ul>
             </nav>
         </div>
+    </div>
+
+    <!-- Search Form -->
+    <div th:fragment="search_form(moduleURL)">
+        <form class="form-inline m-3" th:action="@{${moduleURL}}">
+            <input name="sortField" th:value="${sortField}" type="hidden"/>
+            <input name="sortDir" th:value="${sortDir}" type="hidden"/>
+            <label for="filter">Filter</label> &nbsp; &nbsp;
+            <input class="form-control" name="keyword" required th:value="${keyword}" type="search">
+            &nbsp; &nbsp;
+            <button class="btn btn-primary" type="submit" value=""><i class="fas fa-search"></i></button>
+            &nbsp; &nbsp;
+            <button class="btn btn-secondary" onclick="clearFilter()" type="button" value="Clear"><i
+                    class="fas fa-eraser"></i></button>
+        </form>
     </div>
 </body>
 

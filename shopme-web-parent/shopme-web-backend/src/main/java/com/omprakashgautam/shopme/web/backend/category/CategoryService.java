@@ -2,6 +2,7 @@ package com.omprakashgautam.shopme.web.backend.category;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
 import com.omprakashgautam.shopme.web.backend.constants.CommonConstants;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +25,7 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repository;
 
-    public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortDir) {
+    public List<Category> listByPage(CategoryPageInfo pageInfo, int pageNum, String sortDir, String keyword) {
         Sort sort = Sort.by("name");
         if (sortDir.equals(CommonConstants.ASC)) {
             sort = sort.ascending();
@@ -32,13 +33,23 @@ public class CategoryService {
             sort = sort.descending();
         }
 
+        Page<Category> pageCategories;
         Pageable pageable = PageRequest.of(pageNum - 1, PAGE_SIZE, sort);
-        Page<Category> pageCategories = repository.findRootCategories(pageable);
-        List<Category> rootCategories = pageCategories.getContent();
 
+        boolean filterResult = StringUtils.isNotEmpty(keyword);
+        if (filterResult) {
+            pageCategories = repository.search(keyword, pageable);
+        } else {
+            pageCategories = repository.findRootCategories(pageable);
+        }
+        List<Category> rootCategories = pageCategories.getContent();
         pageInfo.setTotalElements(pageCategories.getTotalElements());
         pageInfo.setTotalPages(pageCategories.getTotalPages());
 
+        if (filterResult) {
+            rootCategories.forEach(category -> category.setHasChildren(category.getChildren().size() > 0));
+            return rootCategories;
+        }
         return listHierarchicalCategories(rootCategories, sortDir);
     }
 
