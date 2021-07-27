@@ -1,6 +1,7 @@
 package com.omprakashgautam.shopme.web.backend.category;
 
 import com.omprakashgautam.shopme.commons.entity.Category;
+import com.omprakashgautam.shopme.web.backend.reports.IExporter;
 import com.omprakashgautam.shopme.web.backend.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
@@ -136,5 +138,12 @@ public class CategoryController {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
         return REDIRECT_TO_CATEGORIES;
+    }
+
+    @GetMapping("/categories/export/csv")
+    public void exportToCSV(HttpServletResponse response) throws IOException {
+        List<Category> categories = service.listCategoryForForm();
+        IExporter<Category> exporter = new CategoryCSVExporter();
+        exporter.export(categories, response);
     }
 }

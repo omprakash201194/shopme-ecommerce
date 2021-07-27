@@ -17,9 +17,9 @@ import java.util.List;
  * @author omprakash gautam
  * Created on 15-Jul-21 at 8:26 PM.
  */
-public class UserPdfExporter extends AbstractExporter {
+public class UserPdfExporter extends AbstractExporter<User> {
     public void export(List<User> users, HttpServletResponse response) throws IOException {
-        super.setResponseHeader(response, "application/pdf",".pdf");
+        super.setResponseHeader(response, "users_", "application/pdf", ".pdf");
 
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());

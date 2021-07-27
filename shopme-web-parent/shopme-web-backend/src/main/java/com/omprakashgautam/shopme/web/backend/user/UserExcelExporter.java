@@ -14,7 +14,7 @@ import java.util.List;
  * @author omprakash gautam
  * Created on 15-Jul-21 at 7:49 PM.
  */
-public class UserExcelExporter extends AbstractExporter {
+public class UserExcelExporter extends AbstractExporter<User> {
 
     private final XSSFWorkbook workbook;
     private XSSFSheet sheet;
@@ -23,7 +23,7 @@ public class UserExcelExporter extends AbstractExporter {
         workbook = new XSSFWorkbook();
     }
 
-    private void writeHeaderLine(){
+    private void writeHeaderLine() {
         sheet = workbook.createSheet("Users");
         XSSFRow row = sheet.createRow(0);
         XSSFCellStyle cellStyle = workbook.createCellStyle();
@@ -54,7 +54,7 @@ public class UserExcelExporter extends AbstractExporter {
     }
 
     public void export(List<User> users, HttpServletResponse response) throws IOException {
-        super.setResponseHeader(response,"application/octet-stream",".xlsx");
+        super.setResponseHeader(response, "users_", "application/octet-stream", ".xlsx");
         writeHeaderLine();
         writeData(users);
 

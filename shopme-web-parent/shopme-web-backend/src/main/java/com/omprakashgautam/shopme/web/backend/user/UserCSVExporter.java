@@ -14,14 +14,14 @@ import java.util.List;
  * @author omprakash gautam
  * Created on 15-Jul-21 at 7:18 PM.
  */
-public class UserCSVExporter extends AbstractExporter {
+public class UserCSVExporter extends AbstractExporter<User> {
 
     public void export(List<User> listUsers, HttpServletResponse response) throws IOException {
-        super.setResponseHeader(response,"text/csv",".csv");
+        super.setResponseHeader(response, "users_", "text/csv", ".csv");
 
         ICsvBeanWriter csvBeanWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
-        String [] csvHeader = {"User Id", "Email", "First Name", "Last Name", "Roles", "Enabled"};
-        String [] fieldMapping = {"id","email","firstName", "lastName", "roles","enabled"};
+        String[] csvHeader = {"User Id", "Email", "First Name", "Last Name", "Roles", "Enabled"};
+        String[] fieldMapping = {"id", "email", "firstName", "lastName", "roles", "enabled"};
 
 
         csvBeanWriter.writeHeader(csvHeader);
