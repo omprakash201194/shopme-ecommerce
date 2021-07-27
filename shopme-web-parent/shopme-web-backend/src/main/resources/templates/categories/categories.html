@@ -14,48 +14,34 @@
 
             <a th:href="@{/categories/export/csv}" class="fas fa-file-csv fa-2x icon-dark mr-2"></a>
 
-            <!-- Show toast message of category creation -->
-            <div th:if="${message != null}" class="alert alert-success text-center">
-                [[${message}]]
-            </div>
-
             <!-- Filters -->
-            <div th:replace="fragments :: search_form('/categories/page/1')"/>
+            <div th:replace="fragments :: search_form_and_message('/categories/page/1')"/>
 
 
             <!-- List Categories -->
             <div class="full-details">
                 <table class="table table-bordered table-striped table-hover table-responsive-xl">
                     <thead class="thead-dark">
-                        <tr>
-                            <!-- Id -->
-                            <th class="hideable-column">
-                            <th th:replace="fragments :: column_link('id', 'Id','tag')"></th>
-                            </th>
+                    <tr>
+                        <!-- Id -->
+                        <th class="hideable-column">Id</th>
 
+                        <!-- Photos -->
+                        <th>Category Photos</th>
 
-                            <!-- Photos -->
-                            <th>Category Photos</th>
+                        <!-- Category Name -->
+                        <th th:replace="fragments :: column_link('/categories', 'name', 'Category Name','none')">
+                        </th>
 
-                            <th>
-                                <!-- Category Name  -->
-                                <a class="text-white"
-                                   th:href="@{'/categories/page/' + ${currentPage} +'?sortDir=' + ${reverseSortDir}  + ${keyword != null ? '&keyword=' + keyword : ''}}">Category
-                                    Name</a>
-                                <span
-                                        th:class="${reverseSortDir == 'desc' ? 'fas fa-sort-up' : 'fas fa-sort-down'}"></span>
-                                <!-- <th th:replace="fragments :: column_link('name', 'Category Name','tag')"></th> -->
-                            </th>
-                            <!-- First Name -->
-                            <th class="hideable-column" th:replace="fragments :: column_link('alias', 'Alias','none')">
-                            </th>
+                        <!-- Alias -->
+                        <th class="hideable-column">Alias</th>
 
-                            <!-- Enabled -->
-                            <th th:replace="fragments :: column_link('enabled', 'Enabled','none')"></th>
+                        <!-- Enabled -->
+                        <th>Enabled</th>
 
-                            <!-- Actions -->
-                            <th>Actions</th>
-                        </tr>
+                        <!-- Actions -->
+                        <th>Actions</th>
+                    </tr>
                     </thead>
                     <!-- Data values -->
                     <tbody>
@@ -65,19 +51,27 @@
                         <td>
                                 <span th:if="${category.image == null}"
                                       class="fas fa-portrait fa-3x icon-silver"></span>
-                            <img class="img-circle" th:if="${category.image != null}"
-                                 th:src="@{${category.photosImagePath}}" height="100px" width="100px"
-                                 alt="Category Photo">
+                            <img alt="Category Photo" class="img-circle"
+                                 height="100px" th:if="${category.image != null}"
+                                 th:src="@{${category.photosImagePath}}"
+                                 width="100px">
                         </td>
                         <td>[[${category.name}]]</td>
                         <td class="hideable-column">[[${category.alias}]]</td>
                         <!-- Enabled -->
                         <td>
-                            <div th:replace="fragments :: category_status"/>
+                            <div
+                                    th:replace="fragments :: status(${category.enabled}, 'category','/categories/' + ${category.id})">
+                            </div>
                         </td>
                         <!-- Actions -->
                         <td>
-                            <div th:replace="fragments :: category_actions"/>
+                            <div th:replace="fragments :: edit('category','/categories/edit/' + ${category.id})">
+                            </div>
+                            <!-- Delete category -->
+                            <div
+                                    th:replace="fragments :: delete(${category.id}, 'category','/categories/delete/' + ${category.id}, ${!category.hasChildren})">
+                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -98,9 +92,15 @@
                         <div>[[${category.name}]]</div>
                         <!-- Status and Actions -->
                         <div class="mt-2">
-                            <div th:replace="fragments :: category_status"/>
+                            <div
+                                    th:replace="fragments :: status(${category.enabled}, 'category','/categories/' + ${category.id})">
+                            </div>
                             &nbsp;
-                            <div th:replace="fragments :: category_actions"/>
+                            <div th:replace="fragments :: edit('category','/categories/edit/' + ${category.id})"></div>
+                            <!-- Delete category -->
+                            <div
+                                    th:replace="fragments :: delete(${category.id}, 'category','/categories/delete/' + ${category.id}, ${!category.hasChildren})">
+                            </div>
                         </div>
                     </div>
 

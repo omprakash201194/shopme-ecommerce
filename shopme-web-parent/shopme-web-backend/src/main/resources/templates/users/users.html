@@ -18,12 +18,10 @@
 
             <a th:href="@{/users/export/pdf}" class="fas fa-file-pdf fa-2x icon-dark mr-2"></a>
             <!-- Show toast message of user creation -->
-            <div th:if="${message != null}" class="alert alert-success text-center">
-                [[${message}]]
-            </div>
+
 
             <!-- Filters -->
-            <div th:replace="fragments :: search_form('/users/page/1')"/>
+            <div th:replace="fragments :: search_form_and_message('/users/page/1')"/>
 
             <!-- List users -->
             <div class="full-details">
@@ -32,7 +30,7 @@
                         <tr>
                             <!-- Id -->
                             <th class="hideable-column">
-                            <th th:replace="fragments :: column_link('id', 'User Id','tag')"></th>
+                            <th th:replace="fragments :: column_link('/users', 'id', 'User Id','tag')"></th>
                             </th>
 
 
@@ -41,19 +39,19 @@
 
                             <th class="hideable-column">
                                 <!-- Email  -->
-                            <th th:replace="fragments :: column_link('email', 'Email','tag')"></th>
+                            <th th:replace="fragments :: column_link('/users', 'email', 'Email','tag')"></th>
                             </th>
                             <!-- First Name -->
-                            <th th:replace="fragments :: column_link('firstName', 'First Name','none')"></th>
+                            <th th:replace="fragments :: column_link('/users', 'firstName', 'First Name','none')"></th>
 
                             <!-- Last Name -->
-                            <th th:replace="fragments :: column_link('lastName', 'Last Name','none')"></th>
+                            <th th:replace="fragments :: column_link('/users', 'lastName', 'Last Name','none')"></th>
 
                             <!-- Roles -->
                             <th>Roles</th>
 
                             <!-- Enabled -->
-                            <th th:replace="fragments :: column_link('enabled', 'Enabled','none')"></th>
+                            <th th:replace="fragments :: column_link('/users', 'enabled', 'Enabled','none')"></th>
 
                             <!-- Actions -->
                             <th>Actions</th>
@@ -75,20 +73,17 @@
                             <td>[[${user.roles}]]</td>
 
                             <td>
-                                <a th:if="${user.enabled}" title="Disable this user"
-                                    th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
-                                    class="fas fa-check-circle fa-2x icon-green"></a>
-                                <a th:if="!${user.enabled}" title="Enable this user"
-                                    th:href="@{'/users/' + ${user.id} + '/enabled/true'}"
-                                    class="fas fa-circle fa-2x icon-dark"></a>
-
+                                <div th:replace="fragments :: status(${user.enabled}, 'user','/users/' + ${user.id})">
+                                </div>
                             </td>
                             <td>
-                                <a th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"
-                                   class="fas fa-edit fa-2x icon-green"></a>
+                                <div th:replace="fragments :: edit('user','/users/edit/' + ${user.id})">
+                                </div>
                                 &nbsp;
-                                <a class="fas fa-trash fa-2x icon-dark link-delete" th:entityId="${user.id}"
-                                   th:href="@{'/users/delete/' + ${user.id}}" title="Delete this user"></a>
+                                <!-- Delete user -->
+                                <div
+                                        th:replace="fragments :: delete(${user.id}, 'user','/users/delete/' + ${user.id}, true)">
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -112,23 +107,20 @@
                         <!-- Actions -->
                         <div class="mt-2">
                             <!-- Enable user -->
-                            <a th:if="${user.enabled}" title="Disable this user"
-                                th:href="@{'/users/' + ${user.id} + '/enabled/false'}"
-                                class="fas fa-check-circle fa-2x icon-green"></a>
-
-                            <a th:if="!${user.enabled}" title="Enable this user"
-                               class="fas fa-circle fa-2x icon-dark"
-                               th:href="@{'/users/' + ${user.id} + '/enabled/true'}"></a>
+                            <div th:replace="fragments :: status(${user.enabled}, 'user','/users/' + ${user.id})">
+                            </div>
                             &nbsp;
 
                             <!-- Edit user -->
-                            <a th:href="@{'/users/edit/' + ${user.id}}" title="Edit this user"
-                               class="fas fa-edit fa-2x icon-green"></a>
+                            <div th:replace="fragments :: edit('user','/users/edit/' + ${user.id})">
+                            </div>
                             &nbsp;
 
                             <!-- Delete user -->
-                            <a class="fas fa-trash fa-2x icon-dark link-delete" th:entityId="${user.id}"
-                               th:href="@{'/users/delete/' + ${user.id}}" title="Delete this user"></a>
+                            <div
+                                    th:replace="fragments :: delete(${user.id}, 'user','/users/delete/' + ${user.id}, true)">
+                            </div>
+
                         </div>
                     </div>
                     <div>

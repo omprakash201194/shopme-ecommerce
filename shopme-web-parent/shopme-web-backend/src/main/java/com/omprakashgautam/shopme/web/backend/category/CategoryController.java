@@ -64,7 +64,7 @@ public class CategoryController {
         model.addAttribute("currentPage", pageNum);
         model.addAttribute("sortField", "name");
         model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", reverseSortDir);
+        model.addAttribute("reverseSortOrder", reverseSortDir);
         model.addAttribute("items", categories.size());
         model.addAttribute("keyword", keyword);
         model.addAttribute("startCount", startCount);
