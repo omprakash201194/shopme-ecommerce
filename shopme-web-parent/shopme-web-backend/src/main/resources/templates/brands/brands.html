@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: page_head('Manage Brands - Shop Me Admin')"/>
+
+<body>
+<div class="container-fluid">
+    <!-- Navigation -->
+    <div th:replace="navigation :: menu"></div>
+    <!-- Create new Brand -->
+    <div>
+        <h2>Manage Brand</h2>
+        <a class="fas fa-folder-plus fa-2x icon-dark mr-2" th:href="@{/brands/new}"></a>
+
+        <a class="fas fa-file-csv fa-2x icon-dark mr-2" th:href="@{/brands/export/csv}"></a>
+
+        <!-- Filters -->
+        <div th:replace="fragments :: search_form_and_message('/brands/page/1')"/>
+
+
+        <!-- List Categories -->
+        <div class="full-details">
+            <table class="table table-bordered table-striped table-hover table-responsive-xl">
+                <thead class="thead-dark">
+                <tr>
+                    <!-- Id -->
+                    <th class="hideable-column">Brand Id</th>
+
+                    <!-- Logo -->
+                    <th>Logo</th>
+
+                    <!-- Brand Name -->
+                    <th th:replace="fragments :: column_link('/brands', 'name', 'Brand Name','none')">
+                    </th>
+
+                    <!-- Category -->
+                    <th class="hideable-column">Categories</th>
+
+                    <!-- Actions -->
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <!-- Data values -->
+                <tbody>
+                <tr th:each="brand : ${listBrands}">
+                    <td class="hideable-column">[[${brand.id}]]</td>
+                    <!-- Logo -->
+                    <td>
+
+                    </td>
+                    <!-- Brand Name -->
+                    <td>[[${brand.name}]]</td>
+
+                    <!-- Categories -->
+                    <td class="hideable-column">
+                        <th:block th:each="cat : ${brand.categories}">
+                            <span class="badge badge-secondary" th:text="${cat.name}"></span>
+                        </th:block>
+                    </td>
+
+                    <!-- Actions -->
+                    <td>
+                        <div th:replace="fragments :: edit('brand','/brands/edit/' + ${brand.id})">
+                        </div>
+                        <!-- Delete brand -->
+                        <div
+                                th:replace="fragments :: delete(${brand.id}, 'brand','/brands/delete/' + ${brand.id}, true)">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- Less Details -->
+        <div class="less-details">
+            <div class="row m-2" th:each="brand : ${listBrands}">
+                <div class="col-4">
+                    <!-- Brand Logo photo -->
+
+                </div>
+                <!-- Brand Details -->
+                <div class="col-8">
+                    <!-- Name -->
+                    <div>[[${brand.name}]]</div>
+                    <!-- Status and Actions -->
+                    <div class="mt-2">
+                        <div th:replace="fragments :: edit('brand','/brands/edit/' + ${brand.id})"></div>
+
+                        <!-- Delete brand -->
+                        <div
+                                th:replace="fragments :: delete(${brand.id}, 'brand','/brands/delete/' + ${brand.id}, true)">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    &nbsp;
+                </div>
+            </div>
+        </div>
+        <!-- End of brands listing -->
+
+        <!-- Pagination -->
+        <!-- <div th:replace="fragments :: pagination('/brands','brands')" /> -->
+
+        <!-- Delete Confirmation Modal -->
+        <div th:replace="modal_fragments :: confirm_modal"/>
+
+        <!-- Footer -->
+        <div th:replace="fragments :: footer"></div>
+        <!-- End of container-fluid -->
+    </div>
+</div>
+<script th:src="@{/js/common_list.js}" type="text/javascript"></script>
+<script type="text/javascript">
+        moduleUrl = "[[@{/brands}]]"
+        // Delete brand function
+        $(document).ready(function () {
+            $(".link-delete").click(function (e) {
+                e.preventDefault();
+                showDeleteConfirmModal($(this), 'brand');
+                link = $(this);
+            });
+        });
+
+</script>
+</body>
+
+</html>

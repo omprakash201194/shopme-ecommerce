@@ -37,4 +37,5 @@ public class Brand {
         this.name = name;
         this.logo = logo;
     }
+
 }
