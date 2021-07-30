@@ -46,7 +46,8 @@
                     <td class="hideable-column">[[${brand.id}]]</td>
                     <!-- Logo -->
                     <td>
-
+                        <img alt="Brand Logo" class="img-circle" height="100px" th:if="${brand.logo != null}"
+                             th:src="@{${brand.logoPath}}" width="100px">
                     </td>
                     <!-- Brand Name -->
                     <td>[[${brand.name}]]</td>
@@ -123,6 +124,7 @@
                 link = $(this);
             });
         });
+
 
 </script>
 </body>

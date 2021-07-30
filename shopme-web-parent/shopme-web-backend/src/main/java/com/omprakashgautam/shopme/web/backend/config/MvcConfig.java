@@ -33,7 +33,7 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:/" + categoryImagePath + "/");
 
         //Expose brand logo path
-        String brandLogo = "brand-logo";
+        String brandLogo = "brand-logos";
         Path brandLogoDir = Paths.get(brandLogo);
         String brandLogoPath = brandLogoDir.toFile().getAbsolutePath();
 

@@ -51,9 +51,8 @@
                         <td>
                                 <span th:if="${category.image == null}"
                                       class="fas fa-portrait fa-3x icon-silver"></span>
-                            <img alt="Category Photo" class="img-circle"
-                                 height="100px" th:if="${category.image != null}"
-                                 th:src="@{${category.photosImagePath}}"
+                            <img alt="Category Photo" class="img-circle" height="100px"
+                                 th:if="${category.image != null}" th:src="@{${category.photosImagePath}}"
                                  width="100px">
                         </td>
                         <td>[[${category.name}]]</td>
