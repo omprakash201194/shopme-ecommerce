@@ -9,5 +9,4 @@ public interface CategoryConstants {
     String VIEW_CATEGORY_FORM = "categories/category_form";
 
     String REDIRECT_TO_CATEGORIES = "redirect:/categories";
-    String REDIRECT_TO_A_CATEGORY = "redirect:/categories/page/1?sortField=id&sortDir=asc&keyword=";
 }

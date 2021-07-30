@@ -85,8 +85,8 @@
                             <!-- <img class="img-fluid" id="thumbnail" th:src="@{/images/default-user.png}"
                                 alt="Photo preview" width="100px" height="100px"> -->
 
-                            <img class="img-fluid" id="thumbnail" th:if="${user.photos != null}"
-                                th:src="@{${user.photosImagePath}}" height="100px" width="100px" alt="Photo preview">
+                            <img alt="Photo preview" class="img-fluid" height="100px" id="thumbnail"
+                                 th:src="@{${user.photosImagePath}}" width="100px">
                         </div>
                     </div>
 
@@ -130,7 +130,7 @@
             return false;
         }
 
-        
+
     </script>
     <script type="text/javascript" th:src="@{/js/common_form.js}"></script>
 </body>

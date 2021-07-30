@@ -55,9 +55,8 @@
                                 th:required="${category.photosImagePath == null}" class="mb-2">
 
                             <div class="mt-2">
-                                <img class="img-fluid" id="thumbnail" th:if="${category.image != null}"
-                                    th:src="@{${category.photosImagePath}}" height="100px" width="100px"
-                                    alt="Image preview">
+                                <img alt="Image preview" class="img-fluid" height="100px"
+                                     id="thumbnail" th:src="@{${category.photosImagePath}}" width="100px">
                             </div>
                         </div>
                     </div>

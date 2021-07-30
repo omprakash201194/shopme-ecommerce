@@ -38,4 +38,12 @@ public class Brand {
         this.logo = logo;
     }
 
+    @Transient
+    public String getLogoPath() {
+        if (id == null || logo == null || logo.equalsIgnoreCase("brand-logo.png")) {
+            return "/images/brand-logo.png";
+        }
+        return "/brand-logos/" + this.id + "/" + this.logo;
+    }
+
 }

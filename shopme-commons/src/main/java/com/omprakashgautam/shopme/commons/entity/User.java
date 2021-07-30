@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.ResultSet;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +33,7 @@ public class User {
     private String lastName;
 
     @Column(length = 64)
-    private String photos = "/user-photos/0/default-user.png";
+    private String photos;
 
     private boolean enabled = true;
 
@@ -70,7 +69,7 @@ public class User {
     @Transient
     public String getPhotosImagePath() {
         if (id == null || photos == null) {
-            return "/user-photos/0/default-user.png";
+            return "/images/default-user.png";
         }
         return "/user-photos/" + this.id + "/" + this.photos;
     }

@@ -160,7 +160,7 @@ public class Category {
     @Transient
     public String getPhotosImagePath() {
         if (id == null || image == null || image.equalsIgnoreCase("default.png")) {
-            return "/category-images/0/default.png";
+            return "/images/image-thumbnail.png";
         }
         return "/category-images/" + this.id + "/" + this.image;
     }
